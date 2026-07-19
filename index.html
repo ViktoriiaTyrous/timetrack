@@ -180,7 +180,7 @@
   .proj-actions { display: flex; gap: 4px; opacity: 0.55; transition: opacity .15s; }
   .proj-folder:hover .proj-actions, .proj-card:hover .proj-actions { opacity: 1; }
   .proj-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hairline); }
-  .proj-stats .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin-bottom: 3px; }
+  .proj-stats .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-dim); margin-bottom: 3px; }
   .proj-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 156px; border-radius: var(--r-md); border: 1.5px dashed var(--glass-brd); background: transparent; color: var(--ink-dim); font-weight: 640; transition: border-color .15s, color .15s, background .15s; }
   .proj-add:hover { color: var(--ink); border-color: var(--accent); background: var(--glass-2); }
   .proj-add-plus { font-size: 26px; line-height: 1; }
@@ -271,7 +271,7 @@
 
   .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
   .kpi { padding: 17px 18px; overflow: hidden; }
-  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); font-weight: 680; position: relative; }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-dim); font-weight: 700; position: relative; }
   .kpi-value { font-size: 28px; font-weight: 720; letter-spacing: -0.03em; margin-top: 9px; font-family: var(--font-mono); font-variant-numeric: tabular-nums; position: relative; }
   .kpi-sub { font-size: 12px; color: var(--ink-dim); margin-top: 5px; font-weight: 560; position: relative; }
   .kpi-sub.good { color: var(--good); } .kpi-sub.bad { color: var(--bad); }
@@ -384,9 +384,9 @@
   .sheet { padding: 36px; max-width: 720px; overflow: hidden; }
   .sheet-top { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 26px; position: relative; }
   .sheet h2 { font-size: 28px; letter-spacing: -0.03em; }
-  .sheet .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); font-weight: 680; margin-bottom: 4px; }
+  .sheet .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); font-weight: 700; margin-bottom: 4px; }
   .sheet table { width: 100%; border-collapse: collapse; margin: 20px 0; position: relative; }
-  .sheet th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); padding: 9px 0; border-bottom: 1px solid var(--hairline); }
+  .sheet th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-dim); font-weight: 700; padding: 9px 0; border-bottom: 1px solid var(--hairline); }
   .sheet td { padding: 11px 0; border-bottom: 1px solid var(--hairline); }
   .sheet-tot { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; margin-top: 18px; font-size: 14px; position: relative; }
   .sheet-tot .line { display: flex; gap: 40px; justify-content: space-between; min-width: 230px; }
@@ -523,7 +523,6 @@
   .dock-btn:hover { color: var(--dark-ink); }
   .dock-btn.active { color: var(--dark-ink); background: oklch(1 0 0 / 0.10); }
   .dock-btn.active svg { opacity: 1; }
-  .dock-btn.active::after { content: ""; position: absolute; bottom: 2px; width: 5px; height: 5px; border-radius: 50%; background: var(--grad); }
   .dock-fab { position: relative; width: 60px; height: 60px; margin: 0 6px; border-radius: 50%; border: none; background: var(--grad); color: #fff; display: grid; place-items: center; transform: translateY(-10px); box-shadow: 0 10px 26px oklch(0.66 0.17 350 / 0.5), inset 0 1px 0 oklch(1 0 0 / 0.4); transition: transform .12s, filter .15s; }
   .dock-fab:hover { filter: brightness(1.05); } .dock-fab:active { transform: translateY(-7px) scale(0.97); }
   .dock-fab svg { width: 26px; height: 26px; }
