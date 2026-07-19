@@ -2,7 +2,7 @@
 // Makes the hosted app fully offline. All data stays in the browser (localStorage);
 // this only caches the app shell so it loads with no network.
 
-var CACHE = "tt-cache-v1";
+var CACHE = "tt-cache-v2";
 var SHELL = [
   "./",
   "./index.html",
@@ -35,11 +35,16 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
 
-  // Navigations: serve the cached app shell (offline-first).
+  // Navigations: network-first so app updates are picked up when online;
+  // fall back to the cached shell when offline.
   if (req.mode === "navigate") {
     e.respondWith(
-      caches.match("./index.html").then(function (cached) {
-        return cached || fetch(req).catch(function () { return caches.match("./"); });
+      fetch(req).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put("./index.html", copy); });
+        return res;
+      }).catch(function () {
+        return caches.match("./index.html").then(function (c) { return c || caches.match("./"); });
       })
     );
     return;
