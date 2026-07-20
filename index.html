@@ -249,6 +249,8 @@
   .folder-front { position: relative; z-index: 2; margin-top: 4px; background: var(--glass); backdrop-filter: blur(28px) saturate(195%); -webkit-backdrop-filter: blur(28px) saturate(195%); border: 1px solid var(--glass-brd); border-radius: 3px 18px 18px 18px; box-shadow: var(--shadow-lg), inset 0 1px 0 oklch(1 0 0 / 0.32), inset 0 0 24px oklch(1 0 0 / 0.04); padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
   .folder-tab { position: absolute; top: -22px; left: -1px; width: 36%; min-width: 92px; max-width: 150px; height: 24px; background: var(--glass); border: 1px solid var(--glass-brd); border-bottom: none; border-radius: 11px 14px 0 0; backdrop-filter: blur(28px) saturate(195%); -webkit-backdrop-filter: blur(28px) saturate(195%); box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.28); }
   .proj-folder.active .folder-front { box-shadow: var(--shadow-lg); }
+  @keyframes projflash { 0%, 100% { outline-color: transparent; } 45% { outline-color: var(--accent); } }
+  .proj-flash .folder-front { outline: 2px solid transparent; outline-offset: 3px; animation: projflash 1.1s ease; }
 
   h1,h2,h3,h4 { margin: 0; font-weight: 680; letter-spacing: -0.02em; text-wrap: balance; }
   button { font-family: inherit; font-size: inherit; cursor: pointer; }
@@ -292,7 +294,7 @@
   .btn.primary { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 30%, transparent); }
   .btn.ghost { background: transparent; border-color: transparent; color: var(--ink-dim); box-shadow: none; }
   .btn.ghost:hover { background: var(--glass-2); color: var(--ink); }
-  .btn.ghost.active { background: color-mix(in oklab, var(--accent) 15%, transparent); color: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent); font-weight: 680; }
+  .btn.ghost.active { background: var(--grad); color: #fff; border-color: transparent; box-shadow: var(--shadow-sm); font-weight: 680; }
   .row-acts { display: inline-flex; gap: 4px; justify-content: flex-end; }
   .btn.danger { color: var(--ink-dim); }
   .btn.danger:hover { color: var(--bad); }
@@ -1040,7 +1042,7 @@
       '<div class="proj-toolbar">' + filtSel + sortSel + '<button class="btn primary sm js-add-proj" style="margin-left:auto">+ ' + t("newProject") + '</button></div>' + body;
   }
 
-  function renderProjectPicker() { var el = document.getElementById("proj-tabs"); if (!el) return; el.innerHTML = db.projects.map(function (p) { return '<button class="proj-tab' + (p.id === db.activeProjectId ? " active" : "") + '" data-projtab="' + p.id + '">' + esc(p.name) + '</button>'; }).join(""); }
+  function renderProjectPicker() { var el = document.getElementById("proj-tabs"); if (!el) return; el.innerHTML = db.projects.map(function (p) { return '<button class="proj-tab' + (p.id === db.activeProjectId && current !== "projects" ? " active" : "") + '" data-projtab="' + p.id + '">' + esc(p.name) + '</button>'; }).join(""); }
   function renderLive() { var pill = document.getElementById("live-pill"); if (db.running) { pill.classList.add("on"); pill.classList.toggle("paused", !!db.running.pausedAt); document.getElementById("lp-time").textContent = fmtClock(runElapsed()); var pb = document.getElementById("lp-pause"); if (pb) pb.innerHTML = db.running.pausedAt ? ICON_PLAY : ICON_PAUSE; } else pill.classList.remove("on"); }
   function renderFab() {
     var fab = document.getElementById("dock-fab");
@@ -1218,7 +1220,14 @@
     if (best) toggleTimer(best.id); else setNav("tracker");
   });
   document.getElementById("open-settings").addEventListener("click", openSettings);
-  document.getElementById("proj-tabs").addEventListener("click", function (e) { var b = e.target.closest("[data-projtab]"); if (!b) return; db.activeProjectId = b.dataset.projtab; save(); render(); });
+  document.getElementById("proj-tabs").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-projtab]"); if (!b) return;
+    var pid = b.dataset.projtab; db.activeProjectId = pid; save(); render();
+    if (current === "projects") {
+      var card = document.querySelector('.proj-folder[data-projopen="' + pid + '"]');
+      if (card) { card.scrollIntoView({ behavior: "smooth", block: "center" }); card.classList.add("proj-flash"); setTimeout(function () { card.classList.remove("proj-flash"); }, 1100); }
+    }
+  });
   document.getElementById("all-projects").addEventListener("click", function () { setNav("projects"); });
   document.getElementById("lang-select").addEventListener("change", function (e) { lang = e.target.value; try { localStorage.setItem("timetrack_lang", lang); } catch (x) {} applyI18n(); render(); });
   function addProjectModal(pid) {
