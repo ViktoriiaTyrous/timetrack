@@ -1,4 +1,4 @@
-// TimeTrack Timer — popup UI (task cards, single synced timer).
+// TimeTrack Timer — popup UI (app-consistent dark, single synced timer).
 
 var main = document.getElementById("main");
 var tickTimer = null;
@@ -6,7 +6,7 @@ var APP_URL = "https://viktoriiatyrous.github.io/timetrack/";
 
 var IC_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 var IC_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.3"/><rect x="14" y="5" width="4" height="14" rx="1.3"/></svg>';
-var IC_STOP = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>';
+var IC_STOP = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>';
 
 function fmtClock(sec) {
   sec = Math.max(0, Math.floor(sec));
@@ -21,6 +21,11 @@ function esc(s) {
     return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[m];
   });
 }
+// Avatar gradient — same formula as the app so monograms match.
+function hueOf(s) { var h = 0; s = String(s || ""); for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
+function avStyle(s) { var h = hueOf(s); return "background:linear-gradient(135deg,oklch(0.80 0.15 " + h + "),oklch(0.66 0.18 " + ((h + 55) % 360) + "))"; }
+function initials(s) { var w = String(s || "").trim().split(/\s+/); return (((w[0] || "")[0] || "") + ((w[1] || "")[0] || "")) || (s || "?")[0]; }
+
 function send(msg) { return new Promise(function (res) { chrome.runtime.sendMessage(msg, res); }); }
 function getAll() {
   return new Promise(function (res) {
@@ -28,6 +33,37 @@ function getAll() {
   });
 }
 function openApp() { chrome.tabs.create({ url: APP_URL }); window.close(); }
+
+function runningCard(t, running, todaySec) {
+  var paused = !!running.pausedAt;
+  var sec = todaySec + elapsed(running);
+  return '<div class="tcard running' + (paused ? " paused" : "") + '">' +
+    '<div class="rc-head">' +
+      '<span class="rc-av" style="' + avStyle(t.name) + '">' + esc(initials(t.name)) + '</span>' +
+      '<div class="rc-meta">' +
+        '<div class="rc-eyebrow"><span class="dot"></span>' + (paused ? "PAUSED" : "COUNTING") + '</div>' +
+        '<div class="rc-name">' + esc(t.name) + '</div>' +
+        (t.projectName ? '<div class="rc-pills"><span class="pill">' + esc(t.projectName) + '</span></div>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="rc-timer">' +
+      '<span class="rc-clock" data-clock="' + esc(t.id) + '">' + fmtClock(sec) + '</span>' +
+      '<button class="rbtn" data-act="' + (paused ? "resume" : "pause") + '" title="' + (paused ? "Resume" : "Pause") + '">' + (paused ? IC_PLAY : IC_PAUSE) + '</button>' +
+      '<button class="rbtn stop" data-act="stop" title="Stop">' + IC_STOP + '</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function idleCard(t, todaySec) {
+  return '<div class="tcard idle">' +
+    '<span class="ti-av" style="' + avStyle(t.name) + '">' + esc(initials(t.name)) + '</span>' +
+    '<div class="ti-meta"><div class="ti-name">' + esc(t.name) + '</div>' +
+      (t.projectName ? '<div class="ti-sub"><span class="pill">' + esc(t.projectName) + '</span></div>' : '') +
+    '</div>' +
+    '<span class="ti-time">' + fmtClock(todaySec) + '</span>' +
+    '<button class="pbtn" data-act="start" data-id="' + esc(t.id) + '" data-name="' + esc(t.name) + '" data-proj="' + esc(t.projectName || "") + '" title="Start">' + IC_PLAY + '</button>' +
+  '</div>';
+}
 
 function render(state) {
   if (tickTimer) { clearInterval(tickTimer); tickTimer = null; }
@@ -46,30 +82,24 @@ function render(state) {
     return;
   }
 
-  function card(t) {
-    var isRun = running && running.taskId === t.id;
-    var paused = isRun && !!running.pausedAt;
-    var sec = (totals[t.id] || 0) + (isRun ? elapsed(running) : 0);
-    var act = isRun ? (paused ? "resume" : "pause") : "start";
-    return '<div class="tcard' + (isRun ? (paused ? " paused" : " running") : "") + '">' +
-      '<div class="tc-top"><span class="tc-name">' + esc(t.name) + '</span>' +
-        (t.projectName ? '<span class="tc-proj">' + esc(t.projectName) + '</span>' : '') + '</div>' +
-      '<div class="tc-row">' +
-        '<button class="pbtn" data-act="' + act + '" data-id="' + esc(t.id) + '" data-name="' + esc(t.name) + '" data-proj="' + esc(t.projectName || "") + '">' + (isRun && !paused ? IC_PAUSE : IC_PLAY) + '</button>' +
-        '<span class="tc-time" data-clock="' + esc(t.id) + '">' + fmtClock(sec) + '</span>' +
-        (isRun ? '<button class="sbtn" data-act="stop" title="Stop">' + IC_STOP + '</button>' : '') +
-      '</div></div>';
-  }
+  // running task first, then the rest
+  var ordered = tasks.slice().sort(function (a, b) {
+    var ra = running && running.taskId === a.id ? 1 : 0;
+    var rb = running && running.taskId === b.id ? 1 : 0;
+    return rb - ra;
+  });
 
-  function totalSec() {
-    var s = 0; Object.keys(totals).forEach(function (k) { s += totals[k]; });
-    if (running) s += elapsed(running);
-    return s;
-  }
+  var cards = ordered.map(function (t) {
+    var todaySec = totals[t.id] || 0;
+    return (running && running.taskId === t.id) ? runningCard(t, running, todaySec) : idleCard(t, todaySec);
+  }).join("");
 
-  main.innerHTML = bar +
-    '<div class="cards">' + tasks.map(card).join("") + '</div>' +
-    '<div class="total"><span>Total</span><span class="tv" id="total">' + fmtClock(totalSec()) + '</span></div>';
+  var totalSec = 0;
+  Object.keys(totals).forEach(function (k) { totalSec += totals[k]; });
+  if (running) totalSec += elapsed(running);
+
+  main.innerHTML = bar + '<div class="cards">' + cards + '</div>' +
+    '<div class="total"><span>Total</span><span class="tv" id="total">' + fmtClock(totalSec) + '</span></div>';
 
   document.getElementById("newtask").addEventListener("click", openApp);
   main.querySelectorAll("[data-act]").forEach(function (b) {
@@ -84,16 +114,14 @@ function render(state) {
 
   if (running && !running.pausedAt) {
     tickTimer = setInterval(function () {
+      var base = totals[running.taskId] || 0;
       var clocks = main.querySelectorAll("[data-clock]");
-      var i, el;
-      for (i = 0; i < clocks.length; i++) {
-        el = clocks[i];
-        if (el.getAttribute("data-clock") === running.taskId) {
-          el.textContent = fmtClock((totals[running.taskId] || 0) + elapsed(running));
-        }
+      for (var i = 0; i < clocks.length; i++) {
+        if (clocks[i].getAttribute("data-clock") === running.taskId) clocks[i].textContent = fmtClock(base + elapsed(running));
       }
-      var tot = document.getElementById("total");
-      if (tot) tot.textContent = fmtClock(totalSec());
+      var tot = document.getElementById("total"), ts = 0;
+      Object.keys(totals).forEach(function (k) { ts += totals[k]; });
+      if (tot) tot.textContent = fmtClock(ts + elapsed(running));
     }, 1000);
   }
 }
