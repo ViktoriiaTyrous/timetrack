@@ -518,6 +518,7 @@
     padding: 9px 10px; border-radius: 999px; background: var(--dark-glass); backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
     border: 1px solid var(--dark-glass-brd); box-shadow: var(--shadow-lg); }
   .dock::before { content: ""; position: absolute; inset: 0 0 auto; height: 55%; border-radius: 999px 999px 40px 40px; background: linear-gradient(180deg, oklch(1 0 0 / 0.10), transparent); pointer-events: none; }
+  .dock::after { content: ""; width: 21px; flex-shrink: 0; }
   .dock-btn { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; width: 62px; padding: 8px 4px; border-radius: 20px; border: none; background: transparent; color: var(--dark-ink-dim); font-size: 10px; font-weight: 640; letter-spacing: 0.01em; transition: color .15s, background .15s; }
   .dock-btn svg { width: 21px; height: 21px; opacity: .9; }
   .dock-btn:hover { color: var(--dark-ink); }
@@ -554,7 +555,7 @@
     .view { padding: 6px 14px 130px; } .view-title { font-size: 25px; }
     .grid2 { grid-template-columns: 1fr; } .hero { flex-wrap: wrap; }
     .dock { gap: 2px; padding: 7px 9px; }
-    .dock-grip { display: none; }
+    .dock-grip, .dock::after { display: none; }
     .dock-btn { width: 50px; font-size: 0; gap: 0; padding: 10px; } .dock-btn svg { width: 22px; height: 22px; }
     .dock-fab { width: 50px; height: 50px; margin: 0 5px; transform: translateY(-6px); } .dock-fab svg { width: 22px; height: 22px; }
     .dock.pos-top .dock-fab { transform: translateY(-6px); }
