@@ -188,6 +188,7 @@
   :root[data-photo="on"] .mesh { display: none; }
   /* ---- settings: background picker ---- */
   .bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 12px; }
+  .bg-grouph { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-dim); margin: 18px 2px 10px; }
   .bg-swatch { display: flex; flex-direction: column; gap: 8px; align-items: stretch; padding: 7px; border-radius: 16px; border: 1px solid var(--glass-brd); background: var(--glass-2); color: var(--ink-dim); font-size: 12px; font-weight: 640; box-shadow: var(--shadow-sm); transition: transform .1s, box-shadow .15s, color .15s; }
   .bg-swatch:hover { transform: translateY(-2px); color: var(--ink); }
   .bg-swatch.active { color: var(--ink); box-shadow: 0 0 0 2px var(--accent), var(--shadow-sm); }
@@ -651,7 +652,7 @@
       noProjects:"No projects", createFirst:"Create the first with «+ Project».",
       pProjectName:"Project name:", pRate:"Hourly rate:", pCurrency:"Currency (USD/EUR/GBP/UAH/PLN):", pTaskName:"Task name:", pEstHours:"Estimate in hours:", cDelTask:"Delete task and its entries?", cDelInvoice:"Delete invoice?", cResetDemo:"Reset all data to demo?",
       tProfileSaved:"Profile saved", tEnterClient:"Enter client name", tImported:"Imported", tNotBackup:"File is not a backup", tReadErr:"File read error", tDownloadNa:"Download not available here (works in the file)", tEnterTaskHours:"Enter task and hours", tMarkedPaid:"Marked as paid", tNoTracked:"No tracked time for this project", tNoBillable:"No task amounts set for this project", tAddClient:"Add a client first",
-      bgTitle:"Background", bgDesc:"Choose an ambient theme, or turn it off.", bgIntensity:"Intensity", bgNone:"None",
+      bgTitle:"Background", bgDesc:"Choose an ambient theme, or turn it off.", bgIntensity:"Intensity", bgNone:"None", themeLight:"Light", themeDark:"Dark",
       navProjects:"Projects", projTitle:"Projects", projDesc:"All your projects — pick one to work on", projTasksN:"tasks", projActive:"active", selectProj:"Open", fStart:"Start", fEnd:"End", lastWorked:"Last worked", worked:"Worked", never:"—", editProject:"Edit project", editTask:"Edit task", editEntry:"Edit entry", save:"Save", billing:"Billing", billHourly:"Hourly", billFixed:"Fixed price", billHourlyDesc:"Bill by tracked hours × rate", billFixedDesc:"Enter the amount earned per task (leave blank if unknown)", fAmount:"Amount", fixedLabel:"fixed", wizNext:"Next", wizBack:"Back", wizNameQ:"Name your project", wizBillQ:"How do you bill this project?", wizMoneyQ:"Rate & currency", wizMoneyQFixed:"Currency", invEdit:"Edit", addLine:"Add line", fNotes:"Notes", tInvSaved:"Invoice saved", delProject:"Delete project", cDelProject:"Delete this project with its tasks and time?",
       fStatus:"Status", fDesc:"Description", fNotes:"Notes / links", stPending:"Pending", stActive:"Active", stDone:"Done", stPaid:"Paid", sortRecent:"Recent", sortName:"Name", sortWorked:"Worked", sortEarned:"Earned", allStatuses:"All", allProjects:"All projects", tabVis:"Appearance", tabBiz:"Business", bgPhoto:"Background image", bgPhotoHint:"Use the theme's photo backdrop", tplBranded:"Branded", tplMinimal:"Minimal", tplRuled:"Ruled", tplStriped:"Striped", tplCompact:"Compact", tplModern:"Modern", tplBold:"Bold", tplAccent:"Accent", choosePrintTpl:"Choose a template" },
 
@@ -664,7 +665,7 @@
       noProjects:"Немає проєктів", createFirst:"Створи перший кнопкою «+ Проєкт».",
       pProjectName:"Назва проєкту:", pRate:"Ставка за годину:", pCurrency:"Валюта (USD/EUR/GBP/UAH/PLN):", pTaskName:"Назва завдання:", pEstHours:"Оцінка в годинах:", cDelTask:"Видалити завдання та його записи?", cDelInvoice:"Видалити рахунок?", cResetDemo:"Скинути всі дані до демо?",
       tProfileSaved:"Профіль збережено", tEnterClient:"Вкажи ім'я клієнта", tImported:"Імпортовано", tNotBackup:"Файл не схожий на бекап", tReadErr:"Помилка читання файлу", tDownloadNa:"Завантаження недоступне тут (у файлі працює)", tEnterTaskHours:"Вкажи завдання та години", tMarkedPaid:"Позначено оплаченим", tNoTracked:"Немає відстеженого часу за проєктом", tNoBillable:"Не задано сум за задачами цього проєкту", tAddClient:"Спочатку додай клієнта",
-      bgTitle:"Фон", bgDesc:"Обери тему фону або вимкни його.", bgIntensity:"Інтенсивність", bgNone:"Немає",
+      bgTitle:"Фон", bgDesc:"Обери тему фону або вимкни його.", bgIntensity:"Інтенсивність", bgNone:"Немає", themeLight:"Світлі", themeDark:"Темні",
       navProjects:"Проєкти", projTitle:"Проєкти", projDesc:"Усі твої проєкти — обери, над яким працювати", projTasksN:"задач", projActive:"активний", selectProj:"Відкрити", fStart:"Початок", fEnd:"Кінець", lastWorked:"Востаннє", worked:"Відпрацьовано", never:"—", editProject:"Редагувати проєкт", editTask:"Редагувати задачу", editEntry:"Редагувати запис", save:"Зберегти", billing:"Оплата", billHourly:"Погодинно", billFixed:"Фікс. ціна", billHourlyDesc:"За відстеженими годинами × ставка", billFixedDesc:"Впиши суму за задачу вручну (порожньо якщо невідомо)", fAmount:"Сума", fixedLabel:"фікс", wizNext:"Далі", wizBack:"Назад", wizNameQ:"Назви проєкт", wizBillQ:"Як оплачується цей проєкт?", wizMoneyQ:"Ставка й валюта", wizMoneyQFixed:"Валюта", invEdit:"Редагувати", addLine:"Додати рядок", fNotes:"Нотатки", tInvSaved:"Рахунок збережено", delProject:"Видалити проєкт", cDelProject:"Видалити цей проєкт із задачами й часом?",
       fStatus:"Статус", fDesc:"Опис", fNotes:"Нотатки / посилання", stPending:"Очікує", stActive:"Активний", stDone:"Готово", stPaid:"Оплачено", sortRecent:"Нові", sortName:"Назва", sortWorked:"Відпрацьовано", sortEarned:"Зароблено", allStatuses:"Усі", allProjects:"Усі проєкти", tabVis:"Вигляд", tabBiz:"Бізнес", bgPhoto:"Фонове зображення", bgPhotoHint:"Фото-фон цієї теми", tplBranded:"Брендований", tplMinimal:"Мінімал", tplRuled:"Сітка", tplStriped:"Зебра", tplCompact:"Компакт", tplModern:"Модерн", tplBold:"Жирний", tplAccent:"Акцент", choosePrintTpl:"Обери шаблон" },
 
@@ -677,7 +678,7 @@
       noProjects:"Нет проектов", createFirst:"Создай первый кнопкой «+ Проект».",
       pProjectName:"Название проекта:", pRate:"Ставка за час:", pCurrency:"Валюта (USD/EUR/GBP/UAH/PLN):", pTaskName:"Название задачи:", pEstHours:"Оценка в часах:", cDelTask:"Удалить задачу и её записи?", cDelInvoice:"Удалить счёт?", cResetDemo:"Сбросить все данные к демо?",
       tProfileSaved:"Профиль сохранён", tEnterClient:"Укажи имя клиента", tImported:"Импортировано", tNotBackup:"Файл не похож на бэкап", tReadErr:"Ошибка чтения файла", tDownloadNa:"Скачивание недоступно здесь (в файле работает)", tEnterTaskHours:"Укажи задачу и часы", tMarkedPaid:"Отмечен оплаченным", tNoTracked:"Нет отслеженного времени по проекту", tNoBillable:"Не заданы суммы по задачам этого проекта", tAddClient:"Сначала добавь клиента",
-      bgTitle:"Фон", bgDesc:"Выбери тему фона или отключи.", bgIntensity:"Интенсивность", bgNone:"Нет",
+      bgTitle:"Фон", bgDesc:"Выбери тему фона или отключи.", bgIntensity:"Интенсивность", bgNone:"Нет", themeLight:"Светлые", themeDark:"Тёмные",
       navProjects:"Проекты", projTitle:"Проекты", projDesc:"Все твои проекты — выбери, над каким работать", projTasksN:"задач", projActive:"активный", selectProj:"Открыть", fStart:"Начало", fEnd:"Конец", lastWorked:"Последний раз", worked:"Отработано", never:"—", editProject:"Редактировать проект", editTask:"Редактировать задачу", editEntry:"Редактировать запись", save:"Сохранить", billing:"Оплата", billHourly:"Почасово", billFixed:"Фикс. цена", billHourlyDesc:"По отслеженным часам × ставка", billFixedDesc:"Впиши сумму за задачу вручную (пусто если неизвестно)", fAmount:"Сумма", fixedLabel:"фикс", wizNext:"Далее", wizBack:"Назад", wizNameQ:"Назови проект", wizBillQ:"Как оплачивается проект?", wizMoneyQ:"Ставка и валюта", wizMoneyQFixed:"Валюта", invEdit:"Редактировать", addLine:"Добавить строку", fNotes:"Заметки", tInvSaved:"Счёт сохранён", delProject:"Удалить проект", cDelProject:"Удалить этот проект с задачами и временем?",
       fStatus:"Статус", fDesc:"Описание", fNotes:"Заметки / ссылки", stPending:"Ожидает", stActive:"Активный", stDone:"Готово", stPaid:"Оплачен", sortRecent:"Новые", sortName:"Название", sortWorked:"Отработано", sortEarned:"Заработано", allStatuses:"Все", allProjects:"Все проекты", tabVis:"Вид", tabBiz:"Бизнес", bgPhoto:"Фоновое изображение", bgPhotoHint:"Фон-фото этой темы", tplBranded:"Брендовый", tplMinimal:"Минимал", tplRuled:"Сетка", tplStriped:"Зебра", tplCompact:"Компакт", tplModern:"Модерн", tplBold:"Жирный", tplAccent:"Акцент", choosePrintTpl:"Выбери шаблон" },
 
@@ -690,7 +691,7 @@
       noProjects:"Keine Projekte", createFirst:"Erstelle das erste mit „+ Projekt“.",
       pProjectName:"Projektname:", pRate:"Stundensatz:", pCurrency:"Währung (USD/EUR/GBP/UAH/PLN):", pTaskName:"Aufgabenname:", pEstHours:"Schätzung in Stunden:", cDelTask:"Aufgabe und Einträge löschen?", cDelInvoice:"Rechnung löschen?", cResetDemo:"Alle Daten auf Demo zurücksetzen?",
       tProfileSaved:"Profil gespeichert", tEnterClient:"Kundenname eingeben", tImported:"Importiert", tNotBackup:"Datei ist kein Backup", tReadErr:"Fehler beim Lesen der Datei", tDownloadNa:"Download hier nicht verfügbar (in der Datei funktioniert es)", tEnterTaskHours:"Aufgabe und Stunden angeben", tMarkedPaid:"Als bezahlt markiert", tNoTracked:"Keine erfasste Zeit für dieses Projekt", tAddClient:"Zuerst einen Kunden hinzufügen",
-      bgTitle:"Hintergrund", bgDesc:"Wähle ein Ambiente-Thema oder schalte es aus.", bgIntensity:"Intensität", bgNone:"Keiner",
+      bgTitle:"Hintergrund", bgDesc:"Wähle ein Ambiente-Thema oder schalte es aus.", bgIntensity:"Intensität", bgNone:"Keiner", themeLight:"Hell", themeDark:"Dunkel",
       navProjects:"Projekte", projTitle:"Projekte", projDesc:"Alle Projekte — wähle eines zum Arbeiten", projTasksN:"Aufgaben", projActive:"aktiv", selectProj:"Öffnen", fStart:"Start", fEnd:"Ende", lastWorked:"Zuletzt", worked:"Erfasst", never:"—", editProject:"Projekt bearbeiten", editTask:"Aufgabe bearbeiten", editEntry:"Eintrag bearbeiten", save:"Speichern", billing:"Abrechnung", billHourly:"Stündlich", billFixed:"Festpreis", billHourlyDesc:"Nach erfassten Stunden × Satz", billFixedDesc:"Betrag pro Aufgabe eingeben (leer lassen, wenn unbekannt)", wizNext:"Weiter", wizBack:"Zurück", wizNameQ:"Benenne dein Projekt", wizBillQ:"Wie wird dieses Projekt abgerechnet?", wizMoneyQ:"Satz & Währung", wizMoneyQFixed:"Währung", invEdit:"Bearbeiten", addLine:"Zeile hinzufügen", tInvSaved:"Rechnung gespeichert", tNoBillable:"Keine Beträge für Aufgaben dieses Projekts", delProject:"Projekt löschen", cDelProject:"Dieses Projekt mit Aufgaben und Zeit löschen?",
       fStatus:"Status", fDesc:"Beschreibung", fNotes:"Notizen / Links", stPending:"Ausstehend", stActive:"Aktiv", stDone:"Fertig", stPaid:"Bezahlt", sortRecent:"Neueste", sortName:"Name", sortWorked:"Erfasst", sortEarned:"Verdient", allStatuses:"Alle", allProjects:"Alle Projekte", tabVis:"Darstellung", tabBiz:"Geschäft", bgPhoto:"Hintergrundbild", bgPhotoHint:"Foto-Hintergrund des Themes", tplBranded:"Gebrandet", tplMinimal:"Minimal", tplRuled:"Raster", tplStriped:"Gestreift", tplCompact:"Kompakt", tplModern:"Modern", tplBold:"Fett", tplAccent:"Akzent", choosePrintTpl:"Vorlage wählen" },
 
@@ -703,7 +704,7 @@
       noProjects:"Aucun projet", createFirst:"Créez le premier avec « + Projet ».",
       pProjectName:"Nom du projet :", pRate:"Taux horaire :", pCurrency:"Devise (USD/EUR/GBP/UAH/PLN) :", pTaskName:"Nom de la tâche :", pEstHours:"Estimation en heures :", cDelTask:"Supprimer la tâche et ses entrées ?", cDelInvoice:"Supprimer la facture ?", cResetDemo:"Réinitialiser toutes les données ?",
       tProfileSaved:"Profil enregistré", tEnterClient:"Saisir le nom du client", tImported:"Importé", tNotBackup:"Le fichier n'est pas une sauvegarde", tReadErr:"Erreur de lecture du fichier", tDownloadNa:"Téléchargement indisponible ici (fonctionne dans le fichier)", tEnterTaskHours:"Indiquez la tâche et les heures", tMarkedPaid:"Marquée payée", tNoTracked:"Aucun temps suivi pour ce projet", tAddClient:"Ajoutez d'abord un client",
-      bgTitle:"Arrière-plan", bgDesc:"Choisis un thème d'ambiance ou désactive-le.", bgIntensity:"Intensité", bgNone:"Aucun",
+      bgTitle:"Arrière-plan", bgDesc:"Choisis un thème d'ambiance ou désactive-le.", bgIntensity:"Intensité", bgNone:"Aucun", themeLight:"Clair", themeDark:"Sombre",
       navProjects:"Projets", projTitle:"Projets", projDesc:"Tous tes projets — choisis-en un", projTasksN:"tâches", projActive:"actif", selectProj:"Ouvrir", fStart:"Début", fEnd:"Fin", lastWorked:"Dernier", worked:"Suivi", never:"—", editProject:"Modifier le projet", editTask:"Modifier la tâche", editEntry:"Modifier l'entrée", save:"Enregistrer", billing:"Facturation", billHourly:"Horaire", billFixed:"Prix fixe", billHourlyDesc:"Facturer selon les heures suivies × taux", billFixedDesc:"Saisis le montant par tâche (laisser vide si inconnu)", wizNext:"Suivant", wizBack:"Retour", wizNameQ:"Nomme ton projet", wizBillQ:"Comment factures-tu ce projet ?", wizMoneyQ:"Taux & devise", wizMoneyQFixed:"Devise", invEdit:"Modifier", addLine:"Ajouter une ligne", tInvSaved:"Facture enregistrée", tNoBillable:"Aucun montant défini pour les tâches de ce projet", delProject:"Supprimer le projet", cDelProject:"Supprimer ce projet avec ses tâches et son temps ?",
       fStatus:"Statut", fDesc:"Description", fNotes:"Notes / liens", stPending:"En attente", stActive:"Actif", stDone:"Terminé", stPaid:"Payé", sortRecent:"Récents", sortName:"Nom", sortWorked:"Suivi", sortEarned:"Gagné", allStatuses:"Tous", allProjects:"Tous les projets", tabVis:"Apparence", tabBiz:"Entreprise", bgPhoto:"Image de fond", bgPhotoHint:"Fond photo du thème", tplBranded:"De marque", tplMinimal:"Minimal", tplRuled:"Quadrillé", tplStriped:"Rayé", tplCompact:"Compact", tplModern:"Moderne", tplBold:"Gras", tplAccent:"Accent", choosePrintTpl:"Choisir un modèle" },
 
@@ -716,7 +717,7 @@
       noProjects:"Sin proyectos", createFirst:"Crea el primero con «+ Proyecto».",
       pProjectName:"Nombre del proyecto:", pRate:"Tarifa por hora:", pCurrency:"Moneda (USD/EUR/GBP/UAH/PLN):", pTaskName:"Nombre de la tarea:", pEstHours:"Estimación en horas:", cDelTask:"¿Eliminar la tarea y sus entradas?", cDelInvoice:"¿Eliminar la factura?", cResetDemo:"¿Restablecer todos los datos a demo?",
       tProfileSaved:"Perfil guardado", tEnterClient:"Indica el nombre del cliente", tImported:"Importado", tNotBackup:"El archivo no es una copia", tReadErr:"Error al leer el archivo", tDownloadNa:"Descarga no disponible aquí (funciona en el archivo)", tEnterTaskHours:"Indica tarea y horas", tMarkedPaid:"Marcada como pagada", tNoTracked:"Sin tiempo registrado para este proyecto", tAddClient:"Primero añade un cliente",
-      bgTitle:"Fondo", bgDesc:"Elige un tema de ambiente o desactívalo.", bgIntensity:"Intensidad", bgNone:"Ninguno",
+      bgTitle:"Fondo", bgDesc:"Elige un tema de ambiente o desactívalo.", bgIntensity:"Intensidad", bgNone:"Ninguno", themeLight:"Claros", themeDark:"Oscuros",
       navProjects:"Proyectos", projTitle:"Proyectos", projDesc:"Todos tus proyectos — elige uno para trabajar", projTasksN:"tareas", projActive:"activo", selectProj:"Abrir", fStart:"Inicio", fEnd:"Fin", lastWorked:"Última vez", worked:"Registrado", never:"—", editProject:"Editar proyecto", editTask:"Editar tarea", editEntry:"Editar entrada", save:"Guardar", billing:"Facturación", billHourly:"Por hora", billFixed:"Precio fijo", billHourlyDesc:"Facturar por horas registradas × tarifa", billFixedDesc:"Introduce el importe por tarea (deja vacío si es desconocido)", wizNext:"Siguiente", wizBack:"Atrás", wizNameQ:"Nombra tu proyecto", wizBillQ:"¿Cómo se factura este proyecto?", wizMoneyQ:"Tarifa y moneda", wizMoneyQFixed:"Moneda", invEdit:"Editar", addLine:"Añadir línea", tInvSaved:"Factura guardada", tNoBillable:"No hay importes definidos para las tareas de este proyecto", delProject:"Eliminar proyecto", cDelProject:"¿Eliminar este proyecto con sus tareas y tiempo?",
       fStatus:"Estado", fDesc:"Descripción", fNotes:"Notas / enlaces", stPending:"Pendiente", stActive:"Activo", stDone:"Hecho", stPaid:"Pagado", sortRecent:"Recientes", sortName:"Nombre", sortWorked:"Registrado", sortEarned:"Ganado", allStatuses:"Todos", allProjects:"Todos los proyectos", tabVis:"Apariencia", tabBiz:"Negocio", bgPhoto:"Imagen de fondo", bgPhotoHint:"Fondo con foto del tema", tplBranded:"Con marca", tplMinimal:"Minimal", tplRuled:"Cuadrícula", tplStriped:"Rayado", tplCompact:"Compacto", tplModern:"Moderno", tplBold:"Negrita", tplAccent:"Acento", choosePrintTpl:"Elige una plantilla" }
   };
@@ -753,38 +754,44 @@
   // ---------- theme presets (full palettes) ----------
   var BGKEY = "timetrack_bg";
   var THEMES = [
-    { id: "dark", name: "Dark", sw: "linear-gradient(135deg,oklch(0.34 0.02 280),oklch(0.20 0.015 280))" },
-    { id: "light", name: "Light", sw: "linear-gradient(135deg,oklch(0.98 0.01 280),oklch(0.90 0.02 280))" },
-    { id: "paper", name: "Paper", sw: "linear-gradient(135deg,oklch(0.95 0.05 80),oklch(0.89 0.06 50))" },
-    { id: "sky", name: "Sky", sw: "linear-gradient(135deg,oklch(0.93 0.05 240),oklch(0.87 0.07 260))" },
-    { id: "rose", name: "Rose", sw: "linear-gradient(135deg,oklch(0.94 0.05 15),oklch(0.88 0.07 350))" },
-    { id: "aurora", name: "Aurora", sw: "linear-gradient(135deg,oklch(0.60 0.17 300),oklch(0.34 0.06 290),oklch(0.19 0.04 288))" },
-    { id: "onyx", name: "Onyx", sw: "linear-gradient(135deg,oklch(0.52 0.012 285),oklch(0.22 0.006 285),oklch(0.13 0.005 285))" },
-    { id: "grape", name: "Grape", sw: "linear-gradient(135deg,oklch(0.60 0.18 322),oklch(0.34 0.07 315),oklch(0.18 0.05 314))" },
-    { id: "mint", name: "Teal", sw: "linear-gradient(135deg,oklch(0.74 0.14 178),oklch(0.36 0.07 168),oklch(0.16 0.03 172))" },
-    { id: "ocean", name: "Ocean", sw: "linear-gradient(135deg,oklch(0.62 0.15 250),oklch(0.33 0.05 245),oklch(0.17 0.035 245))" },
-    { id: "sunset", name: "Sunset", sw: "linear-gradient(135deg,oklch(0.82 0.14 60),oklch(0.64 0.17 20),oklch(0.18 0.03 32))" },
-    { id: "amber", name: "Amber", sw: "linear-gradient(135deg,oklch(0.84 0.14 78),oklch(0.62 0.15 50),oklch(0.18 0.04 45))" }
+    { id: "auto", name: "Auto", group: "auto", sw: "linear-gradient(120deg,oklch(0.95 0.012 280) 0 50%,oklch(0.19 0.015 280) 50% 100%)" },
+    { id: "light", name: "Light", group: "light", sw: "linear-gradient(135deg,oklch(0.98 0.01 280),oklch(0.90 0.02 280))" },
+    { id: "paper", name: "Paper", group: "light", sw: "linear-gradient(135deg,oklch(0.95 0.05 80),oklch(0.89 0.06 50))" },
+    { id: "sky", name: "Sky", group: "light", sw: "linear-gradient(135deg,oklch(0.93 0.05 240),oklch(0.87 0.07 260))" },
+    { id: "rose", name: "Rose", group: "light", sw: "linear-gradient(135deg,oklch(0.94 0.05 15),oklch(0.88 0.07 350))" },
+    { id: "dark", name: "Dark", group: "dark", sw: "linear-gradient(135deg,oklch(0.34 0.02 280),oklch(0.20 0.015 280))" },
+    { id: "onyx", name: "Onyx", group: "dark", sw: "linear-gradient(135deg,oklch(0.52 0.012 285),oklch(0.22 0.006 285),oklch(0.13 0.005 285))" },
+    { id: "aurora", name: "Aurora", group: "dark", sw: "linear-gradient(135deg,oklch(0.60 0.17 300),oklch(0.34 0.06 290),oklch(0.19 0.04 288))" },
+    { id: "grape", name: "Grape", group: "dark", sw: "linear-gradient(135deg,oklch(0.60 0.18 322),oklch(0.34 0.07 315),oklch(0.18 0.05 314))" },
+    { id: "mint", name: "Teal", group: "dark", sw: "linear-gradient(135deg,oklch(0.74 0.14 178),oklch(0.36 0.07 168),oklch(0.16 0.03 172))" },
+    { id: "ocean", name: "Ocean", group: "dark", sw: "linear-gradient(135deg,oklch(0.62 0.15 250),oklch(0.33 0.05 245),oklch(0.17 0.035 245))" },
+    { id: "sunset", name: "Sunset", group: "dark", sw: "linear-gradient(135deg,oklch(0.82 0.14 60),oklch(0.64 0.17 20),oklch(0.18 0.03 32))" },
+    { id: "amber", name: "Amber", group: "dark", sw: "linear-gradient(135deg,oklch(0.84 0.14 78),oklch(0.62 0.15 50),oklch(0.18 0.04 45))" }
   ];
-  var THEME_IDS = { dark: 1, light: 1, paper: 1, sky: 1, rose: 1, aurora: 1, onyx: 1, grape: 1, mint: 1, ocean: 1, sunset: 1, amber: 1 };
-  function loadTheme() { try { var s = localStorage.getItem("timetrack_theme"); if (s && THEME_IDS[s]) return s; } catch (e) {} return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light"; }
+  var THEME_IDS = { auto: 1, dark: 1, light: 1, paper: 1, sky: 1, rose: 1, aurora: 1, onyx: 1, grape: 1, mint: 1, ocean: 1, sunset: 1, amber: 1 };
+  function sysDark() { return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches); }
+  function effTheme() { return theme === "auto" ? (sysDark() ? "dark" : "light") : theme; }
+  function loadTheme() { try { var s = localStorage.getItem("timetrack_theme"); if (s && THEME_IDS[s]) return s; } catch (e) {} return "auto"; }
   function loadIntensity() { try { var r = localStorage.getItem(BGKEY); if (r) { var o = JSON.parse(r); if (o && o.intensity != null) return o.intensity; } } catch (e) {} return 0.5; }
   function loadPhotoOn() { try { var r = localStorage.getItem(BGKEY); if (r) { var o = JSON.parse(r); if (o && o.photoOff) return false; } } catch (e) {} return true; }
   var theme = loadTheme(), meshIntensity = loadIntensity(), photoOn = loadPhotoOn();
   var QSTYLES = { minimal: 1, ruled: 1, striped: 1, compact: 1, modern: 1, bold: 1, accent: 1, branded: 1 };
   function loadQuoteStyle() { try { var s = localStorage.getItem("timetrack_qstyle"); if (QSTYLES[s]) return s; } catch (e) {} return "branded"; }
   var quoteStyle = loadQuoteStyle();
-  function themeHasPhoto() { return !!(window.__TT_PHOTOS || {})[theme]; }
+  function themeHasPhoto() { return !!(window.__TT_PHOTOS || {})[effTheme()]; }
   function saveTheme() { try { localStorage.setItem("timetrack_theme", theme); localStorage.setItem(BGKEY, JSON.stringify({ intensity: meshIntensity, photoOff: !photoOn })); } catch (e) {} }
-  function applyTheme() { var r = document.documentElement; r.setAttribute("data-theme", theme); r.style.setProperty("--mesh-op", String(Math.max(0, Math.min(0.6, meshIntensity * 0.7))));
-    var ph = photoOn ? (window.__TT_PHOTOS || {})[theme] : null, bp = document.getElementById("bg-photo");
+  function applyTheme() { var r = document.documentElement, eff = effTheme(); r.setAttribute("data-theme", eff); r.style.setProperty("--mesh-op", String(Math.max(0, Math.min(0.6, meshIntensity * 0.7))));
+    var ph = photoOn ? (window.__TT_PHOTOS || {})[eff] : null, bp = document.getElementById("bg-photo");
     if (bp) { if (ph) { bp.style.backgroundImage = "url(" + ph + ")"; bp.style.setProperty("--photo-op", String(Math.max(0.06, Math.min(0.35, meshIntensity * 0.38)))); bp.classList.add("on"); r.setAttribute("data-photo", "on"); } else { bp.classList.remove("on"); r.removeAttribute("data-photo"); } } }
+  if (window.matchMedia) { try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { if (theme === "auto") { applyTheme(); render(); } }); } catch (e) {} }
   function themeCard() {
-    var sw = THEMES.map(function (th) {
-      return '<button class="bg-swatch' + (theme === th.id ? " active" : "") + '" data-themeset="' + th.id + '"><div class="bg-prev" style="background:' + th.sw + '"></div><span class="bg-name">' + esc(th.name) + '</span></button>';
-    }).join("");
+    function swatch(th) { return '<button class="bg-swatch' + (theme === th.id ? " active" : "") + '" data-themeset="' + th.id + '"><div class="bg-prev" style="background:' + th.sw + '"></div><span class="bg-name">' + esc(th.name) + '</span></button>'; }
+    function grp(g) { return THEMES.filter(function (th) { return th.group === g; }).map(swatch).join(""); }
+    var sw = '<div class="bg-grid">' + grp("auto") + '</div>' +
+      '<div class="bg-grouph">' + t("themeLight") + '</div><div class="bg-grid">' + grp("light") + '</div>' +
+      '<div class="bg-grouph">' + t("themeDark") + '</div><div class="bg-grid">' + grp("dark") + '</div>';
     return '<section class="set-sec"><h3 class="set-sec-h">' + t("bgTitle") + '</h3>' +
-      '<p class="set-sec-sub">' + t("bgDesc") + '</p><div class="bg-grid">' + sw + '</div>' +
+      '<p class="set-sec-sub">' + t("bgDesc") + '</p>' + sw +
       (themeHasPhoto() ? '<div class="set-row"><div class="set-row-txt"><div class="set-row-t">' + t("bgPhoto") + '</div><div class="set-row-s">' + t("bgPhotoHint") + '</div></div><button class="tsw' + (photoOn ? " on" : "") + '" id="bg-photo-toggle" role="switch" aria-checked="' + photoOn + '"><span class="tsw-dot"></span></button></div>' : '') +
       '<div class="set-row"><div class="set-row-txt"><div class="set-row-t">' + t("bgIntensity") + '</div></div><input type="range" id="bg-range" min="0" max="100" value="' + Math.round(meshIntensity * 100) + '"></div>' +
       '</section>';
