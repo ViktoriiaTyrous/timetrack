@@ -292,7 +292,8 @@
   .btn.primary { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 30%, transparent); }
   .btn.ghost { background: transparent; border-color: transparent; color: var(--ink-dim); box-shadow: none; }
   .btn.ghost:hover { background: var(--glass-2); color: var(--ink); }
-  .btn.ghost.active { background: var(--glass-2); color: var(--ink); box-shadow: inset 0 0 0 1px var(--glass-brd); }
+  .btn.ghost.active { background: color-mix(in oklab, var(--accent) 15%, transparent); color: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent); font-weight: 680; }
+  .row-acts { display: inline-flex; gap: 4px; justify-content: flex-end; }
   .btn.danger { color: var(--bad); }
   .btn.danger-solid { background: var(--bad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px color-mix(in oklab, var(--bad) 30%, transparent); }
   .modal.modal-sm { max-width: 384px; }
@@ -838,16 +839,16 @@
       var run = db.running && db.running.taskId === x.id;
       var st = e === 0 ? '<span class="pill neutral">' + t("noEstimate") + '</span>' : tOver ? '<span class="pill bad">+' + (a - e).toFixed(1) + 'h</span>' : '<span class="pill good">' + Math.round(pct) + '%</span>';
       var amtCell = fx ? '<td class="num"><input class="inp mono damt-inp" data-amount="' + x.id + '" type="number" step="1" min="0" value="' + (taskAmt(x) == null ? '' : taskAmt(x)) + '" placeholder="—"></td>' : '<td class="num" data-damt="' + x.id + '">' + money(taskEarned(x, p), p.currency) + '</td>';
-      return '<tr' + (run ? ' class="row-running"' : '') + '><td><div style="display:flex;align-items:center;gap:10px"><button class="timer-btn sm ' + (run ? "run" : "") + '" data-toggle="' + x.id + '" aria-label="' + (run ? "Stop timer" : "Start timer") + '" title="' + (run ? "Stop timer" : "Start timer") + '">' + (run ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>') + '</button><span class="task-av" style="width:30px;height:30px;font-size:12px;' + avatarStyle(x.name) + '">' + esc(initials(x.name)) + '</span><span style="min-width:0">' + esc(x.name) + '</span><button class="btn ghost icon sm" data-taskedit="' + x.id + '" aria-label="' + t("editTask") + '" title="' + t("editTask") + '" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button><button class="btn ghost icon sm danger" data-deltask="' + x.id + '" aria-label="' + t("del") + '" title="' + t("del") + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 6h18M8 6V4h8v2M6 6v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6M10 11v6M14 11v6"/></svg></button></div></td><td class="num">' + e.toFixed(1) + '</td><td class="num" data-dact="' + x.id + '">' + a.toFixed(1) + '</td><td><div class="bar ' + (tOver ? "over" : "under") + '" data-dbar="' + x.id + '"><i style="width:' + pct + '%"></i></div></td><td data-dstat="' + x.id + '">' + st + '</td>' + amtCell + '</tr>';
+      return '<tr' + (run ? ' class="row-running"' : '') + '><td><div style="display:flex;align-items:center;gap:10px"><button class="timer-btn sm ' + (run ? "run" : "") + '" data-toggle="' + x.id + '" aria-label="' + (run ? "Stop timer" : "Start timer") + '" title="' + (run ? "Stop timer" : "Start timer") + '">' + (run ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>') + '</button><span class="task-av" style="width:30px;height:30px;font-size:12px;' + avatarStyle(x.name) + '">' + esc(initials(x.name)) + '</span><span style="min-width:0">' + esc(x.name) + '</span></div></td><td class="num">' + e.toFixed(1) + '</td><td class="num" data-dact="' + x.id + '">' + a.toFixed(1) + '</td><td><div class="bar ' + (tOver ? "over" : "under") + '" data-dbar="' + x.id + '"><i style="width:' + pct + '%"></i></div></td><td data-dstat="' + x.id + '">' + st + '</td>' + amtCell + '<td class="num"><span class="row-acts"><button class="btn ghost icon sm" data-taskedit="' + x.id + '" aria-label="' + t("editTask") + '" title="' + t("editTask") + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button><button class="btn ghost icon sm danger" data-deltask="' + x.id + '" aria-label="' + t("del") + '" title="' + t("del") + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 6h18M8 6V4h8v2M6 6v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6M10 11v6M14 11v6"/></svg></button></span></td></tr>';
     }).join("");
-    if (!ts.length) rows = '<tr><td colspan="6" class="muted" style="text-align:center;padding:26px">' + t("noTasksTitle") + '</td></tr>';
+    if (!ts.length) rows = '<tr><td colspan="7" class="muted" style="text-align:center;padding:26px">' + t("noTasksTitle") + '</td></tr>';
     return head(t("dashTitle"), t("dashDesc", { p: p.name })) + liveHero() +
       '<div class="kpis">' + kpi(t("kEst"), estH.toFixed(1) + "h", t("plan")) +
       kpi(t("kTracked"), actH.toFixed(1) + "h", (over ? "+" : "") + diffH.toFixed(1) + "h " + t("toPlan"), over ? "bad" : "good", "kpi-tracked", "kpi-tracked-sub") +
       kpi(t("kEstVal"), money(estV, p.currency), fx ? t("billFixed") : t("rate") + " " + money(p.rate, p.currency) + "/h") +
       kpi(t("kEarned"), money(actV, p.currency), (over ? t("overrun") + " " : t("within") + " ") + Math.abs(varPct) + "%", over ? "bad" : "good", "kpi-earned", "kpi-earned-sub") + '</div>' +
       '<div class="card"><div class="card-head"><span class="card-title">' + t("tasksPlanFact") + '</span><span style="display:flex;align-items:center;gap:10px"><span class="pill ' + (over ? "bad" : "good") + '">' + (over ? t("overBadge", { n: varPct }) : t("withinBadge")) + '</span><button class="btn sm primary" id="add-task">' + t("addTask") + '</button></span></div>' +
-      '<div class="tbl-wrap"><table class="data"><thead><tr><th>' + t("cTask") + '</th><th class="th-num">' + t("cEst") + '</th><th class="th-num">' + t("cAct") + '</th><th>' + t("cProgress") + '</th><th>' + t("cStatus") + '</th><th class="th-num">' + t("cAmount") + '</th></tr></thead><tbody>' + rows + '</tbody><tfoot><tr class="foot-row"><td>' + t("total") + '</td><td class="num">' + estH.toFixed(1) + '</td><td class="num" id="dash-tot-act">' + actH.toFixed(1) + '</td><td></td><td></td><td class="num" id="dash-tot-earn">' + money(actV, p.currency) + '</td></tr></tfoot></table></div></div>';
+      '<div class="tbl-wrap"><table class="data"><thead><tr><th>' + t("cTask") + '</th><th class="th-num">' + t("cEst") + '</th><th class="th-num">' + t("cAct") + '</th><th>' + t("cProgress") + '</th><th>' + t("cStatus") + '</th><th class="th-num">' + t("cAmount") + '</th><th></th></tr></thead><tbody>' + rows + '</tbody><tfoot><tr class="foot-row"><td>' + t("total") + '</td><td class="num">' + estH.toFixed(1) + '</td><td class="num" id="dash-tot-act">' + actH.toFixed(1) + '</td><td></td><td></td><td class="num" id="dash-tot-earn">' + money(actV, p.currency) + '</td><td></td></tr></tfoot></table></div></div>';
   }
   function liveHero() {
     if (!db.running) return "";
@@ -1019,23 +1020,23 @@
         '<div class="proj-desc muted">' + esc(p.description || "") + '</div>' +
         '<div class="proj-foot">' + statusPill(p) + '<div class="proj-figs"><span class="mono muted">' + m.h.toFixed(1) + 'h</span><span class="mono" style="font-weight:700">' + money(m.e, p.currency) + '</span></div></div></div></div>';
     }
-    var addCard = '<button class="proj-add" id="add-proj-card"><span class="proj-add-plus">+</span><span>' + t("newProject") + '</span></button>';
+    var addCard = '<button class="proj-add js-add-proj"><span class="proj-add-plus">+</span><span>' + t("newProject") + '</span></button>';
     var body;
     if (projFilter !== "all") {
       body = '<div class="proj-grid">' + list.map(projCard).join("") + addCard + '</div>';
     } else {
       var groups = {}; list.forEach(function (p) { var s = projStatus(p); (groups[s] = groups[s] || []).push(p); });
       var order = ["active", "pending", "done", "paid"].filter(function (s) { return groups[s] && groups[s].length; });
-      var secs = order.map(function (s) {
+      var secs = order.map(function (s, i) {
         return '<div class="proj-sec"><div class="proj-sec-h"><span class="pill ' + STATUS_PILL[s] + '">' + stLabel(s) + '</span><span class="proj-sec-n">' + groups[s].length + '</span></div>' +
-          '<div class="proj-grid">' + groups[s].map(projCard).join("") + '</div></div>';
+          '<div class="proj-grid">' + groups[s].map(projCard).join("") + (i === 0 ? addCard : "") + '</div></div>';
       }).join("");
-      body = '<div class="proj-grid proj-add-top">' + addCard + '</div>' + (secs || "");
+      body = secs || '<div class="proj-grid">' + addCard + '</div>';
     }
     var sortSel = '<span class="pill-select"><select id="proj-sort" style="border-radius:999px">' + [["recent", "sortRecent"], ["name", "sortName"], ["worked", "sortWorked"], ["earned", "sortEarned"]].map(function (o) { return '<option value="' + o[0] + '"' + (projSort === o[0] ? " selected" : "") + '>' + t(o[1]) + '</option>'; }).join("") + '</select></span>';
     var filtSel = '<span class="pill-select"><select id="proj-filter" style="border-radius:999px"><option value="all"' + (projFilter === "all" ? " selected" : "") + '>' + t("allStatuses") + '</option>' + STATUS_ORDER.map(function (s) { return '<option value="' + s + '"' + (projFilter === s ? " selected" : "") + '>' + stLabel(s) + '</option>'; }).join("") + '</select></span>';
     return head(t("projTitle"), t("projDesc")) +
-      '<div class="proj-toolbar">' + filtSel + sortSel + '</div>' + body;
+      '<div class="proj-toolbar">' + filtSel + sortSel + '<button class="btn primary sm js-add-proj" style="margin-left:auto">+ ' + t("newProject") + '</button></div>' + body;
   }
 
   function renderProjectPicker() { var el = document.getElementById("proj-tabs"); if (!el) return; el.innerHTML = db.projects.map(function (p) { return '<button class="proj-tab' + (p.id === db.activeProjectId ? " active" : "") + '" data-projtab="' + p.id + '">' + esc(p.name) + '</button>'; }).join(""); }
@@ -1309,7 +1310,7 @@
     if ((el = e.target.closest("[data-projdel]"))) { var pid = el.dataset.projdel; confirmModal(t("cDelProject"), function () { var rem = db.tasks.filter(function (x) { return x.projectId === pid; }).map(function (x) { return x.id; }); db.projects = db.projects.filter(function (p) { return p.id !== pid; }); db.tasks = db.tasks.filter(function (x) { return x.projectId !== pid; }); db.entries = db.entries.filter(function (en) { return rem.indexOf(en.taskId) < 0; }); if (db.running && rem.indexOf(db.running.taskId) >= 0) db.running = null; if (db.activeProjectId === pid) db.activeProjectId = db.projects[0] ? db.projects[0].id : null; save(); render(); }); return; }
     if ((el = e.target.closest("[data-projstatus]"))) { var sp = db.projects.find(function (x) { return x.id === el.dataset.projstatus; }); if (sp) { var si = STATUS_ORDER.indexOf(projStatus(sp)); sp.status = STATUS_ORDER[(si + 1) % STATUS_ORDER.length]; save(); render(); } return; }
     if ((el = e.target.closest("[data-projopen]"))) { db.activeProjectId = el.dataset.projopen; save(); setNav("dashboard"); return; }
-    if (e.target.closest("#add-proj-card")) { openProjectWizard(); return; }
+    if (e.target.closest(".js-add-proj")) { openProjectWizard(); return; }
     if (e.target.closest("[data-pause]")) return pauseResume();
     if ((el = e.target.closest("[data-toggle]"))) return toggleTimer(el.dataset.toggle);
     if ((el = e.target.closest("[data-taskedit]"))) { editTask(el.dataset.taskedit); return; }
