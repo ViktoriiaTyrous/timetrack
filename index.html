@@ -728,9 +728,9 @@
   var quoteStyle = loadQuoteStyle();
   function themeHasPhoto() { return !!(window.__TT_PHOTOS || {})[theme]; }
   function saveTheme() { try { localStorage.setItem("timetrack_theme", theme); localStorage.setItem(BGKEY, JSON.stringify({ intensity: meshIntensity, photoOff: !photoOn })); } catch (e) {} }
-  function applyTheme() { var r = document.documentElement; r.setAttribute("data-theme", theme); r.style.setProperty("--mesh-op", String(Math.max(0, Math.min(0.9, meshIntensity * 0.9))));
+  function applyTheme() { var r = document.documentElement; r.setAttribute("data-theme", theme); r.style.setProperty("--mesh-op", String(Math.max(0, Math.min(0.6, meshIntensity * 0.7))));
     var ph = photoOn ? (window.__TT_PHOTOS || {})[theme] : null, bp = document.getElementById("bg-photo");
-    if (bp) { if (ph) { bp.style.backgroundImage = "url(" + ph + ")"; bp.style.setProperty("--photo-op", String(Math.max(0.2, Math.min(1, meshIntensity + 0.3)))); bp.classList.add("on"); r.setAttribute("data-photo", "on"); } else { bp.classList.remove("on"); r.removeAttribute("data-photo"); } } }
+    if (bp) { if (ph) { bp.style.backgroundImage = "url(" + ph + ")"; bp.style.setProperty("--photo-op", String(Math.max(0.06, Math.min(0.35, meshIntensity * 0.38)))); bp.classList.add("on"); r.setAttribute("data-photo", "on"); } else { bp.classList.remove("on"); r.removeAttribute("data-photo"); } } }
   function themeCard() {
     var sw = THEMES.map(function (th) {
       return '<button class="bg-swatch' + (theme === th.id ? " active" : "") + '" data-themeset="' + th.id + '"><div class="bg-prev" style="background:' + th.sw + '"></div><span class="bg-name">' + esc(th.name) + '</span></button>';
