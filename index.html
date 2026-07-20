@@ -185,7 +185,7 @@
   /* theme background photo layer */
   .bg-photo { position: fixed; inset: 0; z-index: -2; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0; pointer-events: none; transition: opacity .35s ease; }
   .bg-photo.on { opacity: var(--photo-op, 0.6); }
-  .bg-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 30%, transparent), color-mix(in oklab, var(--bg) 58%, transparent)); }
+  .bg-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 10%, transparent), color-mix(in oklab, var(--bg) 32%, transparent)); }
   :root[data-photo="on"] .mesh { display: none; }
   /* ---- settings: background picker ---- */
   .bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 12px; }
@@ -298,8 +298,8 @@
   .btn.ghost:hover { background: var(--glass-2); color: var(--ink); }
   .btn.ghost.active { background: var(--grad); color: #fff; border-color: transparent; box-shadow: var(--shadow-sm); font-weight: 680; }
   .row-acts { display: inline-flex; gap: 4px; justify-content: flex-end; }
-  .btn.danger { color: var(--ink-dim); }
-  .btn.danger:hover { color: var(--bad); }
+  .btn.danger { color: var(--bad); }
+  .btn.danger:hover { color: var(--bad); background: color-mix(in oklab, var(--bad) 12%, transparent); border-color: color-mix(in oklab, var(--bad) 35%, transparent); }
   .btn.danger-solid { background: var(--bad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px color-mix(in oklab, var(--bad) 30%, transparent); }
   .modal.modal-sm { max-width: 384px; }
   .confirm-msg { font-size: 14px; line-height: 1.5; color: var(--ink); margin: 6px 2px 2px; }
@@ -399,12 +399,14 @@
   .modal-body > .field.half { flex: 1 1 calc(50% - 7px); }
   .modal-foot { position: relative; padding: 15px 22px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--hairline); }
   .settings-modal { width: min(600px, 100%); max-height: 88vh; display: flex; flex-direction: column; }
-  .settings-modal .modal-body { overflow-y: auto; padding: 4px 22px 8px; display: flex; flex-direction: column; gap: 0; }
+  .settings-modal .modal-body { overflow-x: hidden; overflow-y: auto; padding: 4px 22px 8px; display: flex; flex-direction: column; flex-wrap: nowrap; gap: 0; }
   .modal-x { position: absolute; top: 12px; right: 14px; width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--glass-2); color: var(--ink-dim); display: grid; place-items: center; box-shadow: var(--shadow-sm); }
   .modal-x:hover { color: var(--ink); }
   .settings-modal .modal-body > * { flex-shrink: 0; }
+  .invoice-modal { width: min(720px, 100%); max-height: 90vh; display: flex; flex-direction: column; }
+  .invoice-modal .invoice-body { overflow-x: hidden; overflow-y: auto; display: block; padding: 8px 22px 22px; }
   .settings-tabs { display: flex; gap: 6px; padding: 12px 20px 0; }
-  .stab { padding: 8px 16px; border-radius: 11px; border: none; background: transparent; color: color-mix(in oklab, var(--ink-dim), var(--ink) 66%); font-weight: 680; font-size: 13px; transition: background .15s, color .15s; }
+  .stab { padding: 8px 16px; border-radius: 11px; border: none; background: transparent; color: var(--ink); font-weight: 700; font-size: 13px; transition: background .15s, color .15s; }
   .stab:hover { color: var(--ink); }
   .stab.active { background: var(--glass-2); color: var(--ink); box-shadow: var(--shadow-sm); }
   .tsw { width: 44px; height: 25px; border-radius: 999px; border: 1px solid var(--glass-brd); background: var(--glass-2); position: relative; padding: 0; cursor: pointer; transition: background .16s; flex-shrink: 0; }
@@ -670,7 +672,7 @@
       dashTitle:"Dashboard", dashDesc:"Plan vs actual · project «{p}»", kEst:"Estimated hours", kTracked:"Tracked", kEstVal:"Estimated", kEarned:"Earned", plan:"plan", toPlan:"to plan", rate:"rate", overrun:"overrun", within:"within", tasksPlanFact:"Tasks · plan / actual", overBadge:"Overrun {n}%", withinBadge:"Within estimate", cTask:"Task", cEst:"Est.", cAct:"Actual", cProgress:"Time used", cStatus:"Status", cAmount:"Amount", total:"Total", noEstimate:"no estimate", noTasksDash:"No tasks. Add them in Tracker.",
       counting:"counting", trackTitle:"Time tracker", trackDesc:"Live timer or manual entry per task", projectTasks:"Project tasks", addTask:"+ Task", noTasksTitle:"No tasks yet", noTasksDesc:"Add your first — the timer runs on it.", manualEntry:"Manual entry", fTask:"Task", fHours:"Hours", fDate:"Date", fNote:"Note", notePh:"What you did", add:"Add", recent:"Recent entries", cNote:"Note", noEntries:"No entries yet", estShort:"est.",
       estTitle:"Client estimate", estDesc:"Quote table: hours × rate. Change the estimate — the total recalculates.", quoteSuffix:"· quote", printPdf:"Print / PDF", cRate:"Rate", addTasksFirst:"Add tasks in Tracker, then set hours here.", validUntil:"Valid until", quoteThanks:"This estimate is valid for 30 days. Thank you — reach out with any questions.", quoteDoc:"Quote document",
-      invTitle:"Invoices", invDesc:"Invoice from tracked time — lines are pulled automatically", newFromTime:"New invoice from time", fClient:"Client", fProject:"Project", fTax:"Tax %", generate:"Generate", addClientHint:"Add a client in Settings first.", issued:"Issued invoices", cNo:"No.", cClient:"Client", cDate:"Date", noInvoices:"No invoices yet", paid:"paid", draft:"draft", invoiceH:"Invoice", billTo:"Bill to", due:"Due", cDesc:"Description", subtotal:"Subtotal", taxLine:"Tax {n}%", grand:"Total", printSave:"Print / Save PDF", markPaid:"Mark as paid", del:"Delete", invoiceThanks:"Thank you for your business. Payment due within 14 days.",
+      invTitle:"Invoices", invDesc:"Invoice from tracked time — lines are pulled automatically", newFromTime:"New invoice from time", fClient:"Client", fProject:"Project", fTax:"Tax %", generate:"Generate", addClientHint:"Add a client in Settings first.", issued:"Issued invoices", cNo:"No.", cClient:"Client", cDate:"Date", noInvoices:"No invoices yet", paid:"paid", draft:"draft", invoiceH:"Invoice", billTo:"Bill to", due:"Due", cDesc:"Description", subtotal:"Subtotal", taxLine:"Tax {n}%", grand:"Total", printSave:"Print / Save PDF", markPaid:"Mark as paid", del:"Delete", emailInv:"Email", emHi:"Hi {n},", emHiPlain:"Hello,", emIntro:"Please find your invoice below.", emClosing:"Thank you for your business.", invoiceThanks:"Thank you for your business. Payment due within 14 days.",
       setTitle:"Settings", setDesc:"Business profile, clients and data", bizProfile:"Business profile", fName:"Name / studio", fEmail:"Email", fAddress:"Address", saveProfile:"Save profile", clients:"Clients", clName:"Name", addBtn:"Add", noClients:"No clients yet", orNewClient:"+ New client", newClientPh:"Type a name to add", quickAddClient:"New client", add:"Add", data:"Data", dataNote:"Everything is stored locally in your browser. Export a backup to move to another device.", expJson:"Export JSON", impJson:"Import JSON", expCsv:"Export CSV", resetDemo:"Reset to demo", language:"Language", newProject:"New project", newTask:"New task", currency:"Currency", cancel:"Cancel", create:"Create", obWelcome:"Welcome to TimeTrack", obSubtitle:"Set up once — change anything later in Settings.", obDefaultCurrency:"Default currency", obYourName:"Your name / studio", obFirstProject:"First project (optional)", obFirstTask:"First task (optional)", obStart:"Get started", obSkip:"Skip for now", obLangQ:"Choose your language", obThemeQ:"Pick a theme", obGuideQ:"Want a quick guide?", obGuideYes:"Yes, show me around", obGuideYesD:"A 30-second tour of the main buttons", obGuideNo:"No thanks", obGuideNoD:"I'll explore on my own", tourNext:"Next", tourDone:"Done", tourSkip:"Skip", tourProj:"Create a project here — everything starts with a project.", tourTimer:"Start and stop the timer here. Time is saved automatically.", tourTracker:"Tracker — see your tasks and log time for the active project.", tourEst:"Estimate — plan hours and cost before you start the work.", tourInv:"Invoices — turn tracked time into an invoice in one click.", tourTheme:"Settings — your business profile, clients, theme, language and data backup (export / import) all live here.",
       noProjects:"No projects yet", createFirst:"A project holds your tasks, tracked time, estimates and invoices.", startFirstProject:"Start my first project",
       pProjectName:"Project name:", pRate:"Hourly rate:", pCurrency:"Currency (USD/EUR/GBP/UAH/PLN):", pTaskName:"Task name:", pEstHours:"Estimate in hours:", cDelTask:"Delete task and its entries?", cDelInvoice:"Delete invoice?", cResetDemo:"Reset all data to demo?",
@@ -801,11 +803,12 @@
   var QSTYLES = { minimal: 1, ruled: 1, striped: 1, compact: 1, modern: 1, bold: 1, accent: 1, branded: 1 };
   function loadQuoteStyle() { try { var s = localStorage.getItem("timetrack_qstyle"); if (QSTYLES[s]) return s; } catch (e) {} return "branded"; }
   var quoteStyle = loadQuoteStyle();
+  var PHOTO_TUNE = { mint: 0.4 };
   function themeHasPhoto() { return !!(window.__TT_PHOTOS || {})[effTheme()]; }
   function saveTheme() { try { localStorage.setItem("timetrack_theme", theme); localStorage.setItem(BGKEY, JSON.stringify({ intensity: meshIntensity, photoOff: !photoOn })); } catch (e) {} }
   function applyTheme() { var r = document.documentElement, eff = effTheme(); r.setAttribute("data-theme", eff); r.style.setProperty("--mesh-op", String(Math.max(0, Math.min(0.6, meshIntensity * 0.7))));
     var ph = photoOn ? (window.__TT_PHOTOS || {})[eff] : null, bp = document.getElementById("bg-photo");
-    if (bp) { if (ph) { bp.style.backgroundImage = "url(" + ph + ")"; bp.style.setProperty("--photo-op", String(Math.max(0.22, Math.min(0.58, meshIntensity * 0.58)))); bp.classList.add("on"); r.setAttribute("data-photo", "on"); } else { bp.classList.remove("on"); r.removeAttribute("data-photo"); } } }
+    if (bp) { if (ph) { var opFix = PHOTO_TUNE[eff]; var op = opFix != null ? opFix : Math.max(0.55, Math.min(0.92, 0.5 + meshIntensity * 0.4)); bp.style.backgroundImage = "url(" + ph + ")"; bp.style.setProperty("--photo-op", String(op)); bp.classList.add("on"); r.setAttribute("data-photo", "on"); } else { bp.classList.remove("on"); r.removeAttribute("data-photo"); } } }
   // Auto theme is clock-based (day 07:00–19:00 = light, else dark). Flip at the boundary while the app stays open.
   setInterval(function () { if (theme !== "auto") return; if (document.documentElement.getAttribute("data-theme") !== effTheme()) { applyTheme(); render(); } }, 60000);
   function themeCard() {
@@ -959,14 +962,14 @@
       '<div class="field" style="flex:2;min-width:170px"><label for="inv-project">' + t("fProject") + '</label><span class="pill-select" style="width:100%"><select class="inp" id="inv-project" style="border-radius:12px">' + db.projects.map(function (pr) { return '<option value="' + pr.id + '"' + (pr.id === db.activeProjectId ? " selected" : "") + '>' + esc(pr.name) + '</option>'; }).join("") + '</select></span></div>' +
       '<div class="field" style="flex:1;min-width:90px"><label for="inv-tax">' + t("fTax") + '</label><input class="inp mono" id="inv-tax" type="number" step="1" min="0" value="0"></div>' +
       '<button class="btn primary" id="inv-gen">' + t("generate") + '</button></div>' + '<div class="row" style="margin-top:12px"><div class="field" style="flex:1;min-width:200px"><label for="inv-newclient">' + t("quickAddClient") + (db.clients.length ? '' : ' — ' + t("addClientHint")) + '</label><span style="display:flex;gap:8px"><input class="inp" id="inv-newclient" placeholder="' + t("newClientPh") + '"><button class="btn sm" id="inv-addclient" style="flex-shrink:0">' + t("add") + '</button></span></div></div>' + '</div></div>' +
-      '<div class="card no-print"><div class="card-head"><span class="card-title">' + t("issued") + '</span></div><div class="tbl-wrap"><table class="data"><thead><tr><th>' + t("cNo") + '</th><th>' + t("cClient") + '</th><th>' + t("cDate") + '</th><th>' + t("cStatus") + '</th><th class="th-num">' + t("cAmount") + '</th></tr></thead><tbody>' + (listRows || '<tr><td colspan="5" class="muted" style="text-align:center;padding:24px">' + t("noInvoices") + '</td></tr>') + '</tbody></table></div></div><div id="inv-preview"></div></div>';
+      '<div class="card no-print"><div class="card-head"><span class="card-title">' + t("issued") + '</span></div><div class="tbl-wrap"><table class="data"><thead><tr><th>' + t("cNo") + '</th><th>' + t("cClient") + '</th><th>' + t("cDate") + '</th><th>' + t("cStatus") + '</th><th class="th-num">' + t("cAmount") + '</th></tr></thead><tbody>' + (listRows || '<tr><td colspan="5" class="muted" style="text-align:center;padding:24px">' + t("noInvoices") + '</td></tr>') + '</tbody></table></div></div></div>';
   }
   function invTotal(inv) { var fx = inv.billing === "fixed"; var sub = inv.lines.reduce(function (a, l) { return a + (fx ? (+l.amount || 0) : (l.hours || 0) * (l.rate || 0)); }, 0), tax = sub * (inv.taxRate || 0) / 100; return { sub: sub, tax: tax, grand: sub + tax }; }
   function invoiceSheet(inv) {
     var cl = db.clients.find(function (c) { return c.id === inv.clientId; }) || {}, b = db.business || {}, tt = invTotal(inv), fx = inv.billing === "fixed";
     var lines = inv.lines.map(function (l) { return fx ? '<tr><td>' + esc(l.desc) + '</td><td class="num">' + money(+l.amount || 0, inv.currency) + '</td></tr>' : '<tr><td>' + esc(l.desc) + '</td><td class="num">' + (l.hours || 0).toFixed(2) + '</td><td class="num">' + money(l.rate, inv.currency) + '</td><td class="num">' + money((l.hours || 0) * (l.rate || 0), inv.currency) + '</td></tr>'; }).join("");
     var invThead = fx ? '<th>' + t("cDesc") + '</th><th class="th-num">' + t("cAmount") + '</th>' : '<th>' + t("cDesc") + '</th><th class="th-num">' + t("fHours") + '</th><th class="th-num">' + t("cRate") + '</th><th class="th-num">' + t("cAmount") + '</th>';
-    return '<div class="sheet"><div class="sheet-top"><div><h2>' + t("invoiceH") + '</h2><div class="muted mono">' + esc(inv.number) + '</div></div><div style="text-align:right"><div style="font-weight:700;font-size:16px">' + esc(b.name || "Your Studio") + '</div><div class="muted">' + esc(b.email || "") + '</div><div class="muted">' + esc(b.address || "") + '</div></div></div><div style="display:flex;justify-content:space-between;gap:24px;margin-bottom:8px;position:relative"><div><div class="lbl">' + t("billTo") + '</div><div style="font-weight:640">' + esc(cl.name || "—") + '</div><div class="muted">' + esc(cl.email || "") + '</div><div class="muted">' + esc(cl.address || "") + '</div></div><div style="text-align:right"><div class="lbl">' + t("cDate") + '</div><div>' + fmtDate(inv.date) + '</div><div class="lbl" style="margin-top:8px">' + t("due") + '</div><div>' + fmtDate(inv.dueDate) + '</div></div></div><table><thead><tr>' + invThead + '</tr></thead><tbody>' + lines + '</tbody></table><div class="sheet-tot"><div class="line"><span class="muted">' + t("subtotal") + '</span><span class="mono">' + money(tt.sub, inv.currency) + '</span></div>' + (inv.taxRate ? '<div class="line"><span class="muted">' + t("taxLine", { n: inv.taxRate }) + '</span><span class="mono">' + money(tt.tax, inv.currency) + '</span></div>' : '') + '<div class="line grand"><span>' + t("grand") + '</span><span class="mono">' + money(tt.grand, inv.currency) + '</span></div></div>' + (inv.notes ? '<p class="muted" style="margin-top:20px;position:relative">' + esc(inv.notes) + '</p>' : '') + '</div><div class="row no-print" style="margin-top:16px"><button class="btn primary" id="inv-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-2M8 14h8v7H8z"/></svg>' + t("printSave") + '</button><button class="btn" id="inv-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>' + t("invEdit") + '</button><button class="btn" id="inv-paid">' + t("markPaid") + '</button><button class="btn danger" id="inv-del">' + t("del") + '</button></div>';
+    return '<div class="sheet"><div class="sheet-top"><div><h2>' + t("invoiceH") + '</h2><div class="muted mono">' + esc(inv.number) + '</div></div><div style="text-align:right"><div style="font-weight:700;font-size:16px">' + esc(b.name || "Your Studio") + '</div><div class="muted">' + esc(b.email || "") + '</div><div class="muted">' + esc(b.address || "") + '</div></div></div><div style="display:flex;justify-content:space-between;gap:24px;margin-bottom:8px;position:relative"><div><div class="lbl">' + t("billTo") + '</div><div style="font-weight:640">' + esc(cl.name || "—") + '</div><div class="muted">' + esc(cl.email || "") + '</div><div class="muted">' + esc(cl.address || "") + '</div></div><div style="text-align:right"><div class="lbl">' + t("cDate") + '</div><div>' + fmtDate(inv.date) + '</div><div class="lbl" style="margin-top:8px">' + t("due") + '</div><div>' + fmtDate(inv.dueDate) + '</div></div></div><table><thead><tr>' + invThead + '</tr></thead><tbody>' + lines + '</tbody></table><div class="sheet-tot"><div class="line"><span class="muted">' + t("subtotal") + '</span><span class="mono">' + money(tt.sub, inv.currency) + '</span></div>' + (inv.taxRate ? '<div class="line"><span class="muted">' + t("taxLine", { n: inv.taxRate }) + '</span><span class="mono">' + money(tt.tax, inv.currency) + '</span></div>' : '') + '<div class="line grand"><span>' + t("grand") + '</span><span class="mono">' + money(tt.grand, inv.currency) + '</span></div></div>' + (inv.notes ? '<p class="muted" style="margin-top:20px;position:relative">' + esc(inv.notes) + '</p>' : '') + '</div><div class="row no-print" style="margin-top:16px"><button class="btn primary" id="inv-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-2M8 14h8v7H8z"/></svg>' + t("printSave") + '</button><button class="btn" id="inv-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>' + t("invEdit") + '</button><button class="btn" id="inv-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>' + t("emailInv") + '</button><button class="btn" id="inv-paid">' + t("markPaid") + '</button><button class="btn danger" id="inv-del">' + t("del") + '</button></div>';
   }
   function settingsBusiness() {
     var b = db.business || {};
@@ -1424,14 +1427,6 @@
     if (e.target.id === "inv-gen") return genInvoice();
     if (e.target.closest("#print-est")) { openPrintPicker(activeProject()); return; }
     if ((el = e.target.closest("[data-invopen]"))) return openInvoice(el.dataset.invopen);
-    if (e.target.closest("#inv-print")) { setTimeout(function () { window.print(); }, 60); return; }
-    if (e.target.closest("#inv-paid")) return markPaid();
-    if (e.target.closest("#inv-del")) return delInvoice();
-    if (e.target.closest("#inv-edit")) return editInvoice(openInvId);
-    if (e.target.closest("#ie-addline")) { var tb = document.getElementById("ie-lines"), iv = db.invoices.find(function (x) { return x.id === openInvId; }); if (tb) tb.insertAdjacentHTML("beforeend", invLineRow(null, iv && iv.billing === "fixed")); return; }
-    if (e.target.closest("[data-ierm]")) { var rl = e.target.closest(".ie-line"); if (rl) rl.remove(); return; }
-    if (e.target.closest("#ie-save")) return saveInvoiceEdit();
-    if (e.target.closest("#ie-cancel")) return openInvoice(openInvId);
   });
   viewEl.addEventListener("change", function (e) {
     if (e.target.dataset && e.target.dataset.est != null) { var x = db.tasks.find(function (n) { return n.id === e.target.dataset.est; }); if (x) { x.estimateHours = parseFloat(e.target.value) || 0; save(); render(); } }
@@ -1460,7 +1455,62 @@
     var inv = { id: uid(), number: "INV-" + (1001 + db.invoices.length), date: Date.now(), dueDate: Date.now() + 14 * 86400000, clientId: clientId, projectId: projectId, currency: pr.currency, billing: fx ? "fixed" : "hourly", taxRate: parseFloat(val("inv-tax")) || 0, lines: lines, notes: t("invoiceThanks"), status: "draft" };
     db.invoices.push(inv); save(); render(); openInvoice(inv.id);
   }
-  function openInvoice(id) { openInvId = id; var inv = db.invoices.find(function (x) { return x.id === id; }); if (!inv) return; if (current !== "invoices") setNav("invoices"); var host = document.getElementById("inv-preview"); if (host) { host.innerHTML = invoiceSheet(inv); host.scrollIntoView({ behavior: "smooth", block: "start" }); } }
+  function openInvoice(id) {
+    var inv = db.invoices.find(function (x) { return x.id === id; }); if (!inv) return;
+    openInvId = id;
+    var back = document.createElement("div"); back.className = "modal-back no-print";
+    var mode = "view";
+    function bodyHtml() { return mode === "edit" ? invoiceEditor(inv) : invoiceSheet(inv); }
+    back.innerHTML = '<div class="modal invoice-modal"><div class="modal-head">' + esc(inv.number) + '<button class="modal-x" data-iclose aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div class="modal-body invoice-body">' + bodyHtml() + '</div></div>';
+    document.body.appendChild(back);
+    function paint() { back.querySelector(".invoice-body").innerHTML = bodyHtml(); }
+    function close() { back.remove(); document.removeEventListener("keydown", key); }
+    function key(e) { if (e.key === "Escape") close(); }
+    document.addEventListener("keydown", key);
+    function qv(sel) { var el = back.querySelector(sel); return el ? el.value.trim() : ""; }
+    back.addEventListener("click", function (e) {
+      if (e.target === back || e.target.closest("[data-iclose]")) return close();
+      if (e.target.closest("#inv-print")) { var pd = document.createElement("div"); pd.className = "print-doc"; pd.innerHTML = invoiceSheet(inv); document.body.appendChild(pd); setTimeout(function () { window.print(); setTimeout(function () { pd.remove(); }, 800); }, 60); return; }
+      if (e.target.closest("#inv-email")) { emailInvoice(inv); return; }
+      if (e.target.closest("#inv-edit")) { mode = "edit"; paint(); return; }
+      if (e.target.closest("#inv-paid")) { inv.status = "paid"; save(); render(); paint(); flash(t("tMarkedPaid")); return; }
+      if (e.target.closest("#inv-del")) { confirmModal(t("cDelInvoice"), function () { db.invoices = db.invoices.filter(function (x) { return x.id !== inv.id; }); openInvId = null; save(); render(); close(); }); return; }
+      if (e.target.closest("#ie-cancel")) { mode = "view"; paint(); return; }
+      if (e.target.closest("#ie-addline")) { var tb = back.querySelector("#ie-lines"); if (tb) tb.insertAdjacentHTML("beforeend", invLineRow(null, inv.billing === "fixed")); return; }
+      if (e.target.closest("[data-ierm]")) { var rl = e.target.closest(".ie-line"); if (rl) rl.remove(); return; }
+      if (e.target.closest("#ie-save")) {
+        inv.number = qv("#ie-number") || inv.number;
+        var d = qv("#ie-date"); if (d) inv.date = new Date(d).getTime();
+        var du = qv("#ie-due"); if (du) inv.dueDate = new Date(du).getTime();
+        inv.clientId = qv("#ie-client") || inv.clientId;
+        inv.taxRate = parseFloat(qv("#ie-tax")) || 0;
+        inv.notes = qv("#ie-notes");
+        var lines = [], fx = inv.billing === "fixed";
+        back.querySelectorAll("#ie-lines .ie-line").forEach(function (tr) {
+          var desc = tr.querySelector('[data-ield="desc"]').value.trim();
+          if (fx) { var av = tr.querySelector('[data-ield="amount"]').value.trim(); if (desc || av !== "") lines.push({ desc: desc, amount: av === "" ? 0 : (parseFloat(av) || 0) }); }
+          else { var hours = parseFloat(tr.querySelector('[data-ield="hours"]').value) || 0, rate = parseFloat(tr.querySelector('[data-ield="rate"]').value) || 0; if (desc || hours || rate) lines.push({ desc: desc, hours: hours, rate: rate }); }
+        });
+        inv.lines = lines; save(); render(); mode = "view"; paint(); flash(t("tInvSaved")); return;
+      }
+    });
+  }
+  function emailInvoice(inv) {
+    var cl = db.clients.find(function (c) { return c.id === inv.clientId; }) || {}, b = db.business || {}, tt = invTotal(inv), fx = inv.billing === "fixed";
+    var subj = t("invoiceH") + " " + inv.number + (b.name ? " — " + b.name : "");
+    var L = [];
+    L.push(cl.name ? t("emHi", { n: cl.name }) : t("emHiPlain"));
+    L.push(""); L.push(t("emIntro"));
+    L.push(""); L.push(t("invoiceH") + ": " + inv.number);
+    L.push(t("cDate") + ": " + fmtDate(inv.date));
+    L.push(t("due") + ": " + fmtDate(inv.dueDate));
+    L.push("");
+    inv.lines.forEach(function (l) { var amt = fx ? (+l.amount || 0) : (l.hours || 0) * (l.rate || 0); L.push("• " + (l.desc || "") + " — " + money(amt, inv.currency)); });
+    L.push(""); L.push(t("grand") + ": " + money(tt.grand, inv.currency));
+    L.push(""); L.push(t("emClosing"));
+    if (b.name) { L.push(""); L.push(b.name); }
+    window.location.href = "mailto:" + encodeURIComponent(cl.email || "") + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(L.join("\n"));
+  }
   function invLineRow(l, fx) { l = l || {}; var rm = '<td class="num"><button class="btn ghost icon sm danger" data-ierm aria-label="' + t("del") + '" title="' + t("del") + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M6 6l12 12M18 6 6 18"/></svg></button></td>'; var name = '<td><input class="inp" data-ield="desc" value="' + esc(l.desc || "") + '"></td>'; if (fx) { return '<tr class="ie-line">' + name + '<td class="num"><input class="inp mono" data-ield="amount" type="number" step="1" min="0" value="' + (l.amount != null ? l.amount : "") + '" placeholder="—" style="width:110px;text-align:right"></td>' + rm + '</tr>'; } return '<tr class="ie-line">' + name + '<td class="num"><input class="inp mono" data-ield="hours" type="number" step="0.25" min="0" value="' + (l.hours || 0) + '" style="width:88px;text-align:right"></td><td class="num"><input class="inp mono" data-ield="rate" type="number" step="1" min="0" value="' + (l.rate || 0) + '" style="width:88px;text-align:right"></td>' + rm + '</tr>'; }
   function invoiceEditor(inv) {
     var clientOpts = db.clients.map(function (c) { return '<option value="' + c.id + '"' + (c.id === inv.clientId ? " selected" : "") + '>' + esc(c.name) + '</option>'; }).join("");
@@ -1478,32 +1528,6 @@
       '<div class="field" style="margin-top:14px"><label for="ie-notes">' + t("fNotes") + '</label><input class="inp" id="ie-notes" value="' + esc(inv.notes || "") + '"></div>' +
       '<div class="row no-print" style="margin-top:16px"><button class="btn primary" id="ie-save">' + t("save") + '</button><button class="btn" id="ie-cancel">' + t("cancel") + '</button></div></div>';
   }
-  function editInvoice(id) { var inv = db.invoices.find(function (x) { return x.id === id; }); if (!inv) return; openInvId = id; if (current !== "invoices") setNav("invoices"); var host = document.getElementById("inv-preview"); if (host) { host.innerHTML = invoiceEditor(inv); host.scrollIntoView({ behavior: "smooth", block: "start" }); } }
-  function saveInvoiceEdit() {
-    var inv = db.invoices.find(function (x) { return x.id === openInvId; }); if (!inv) return;
-    var host = document.getElementById("inv-preview"); if (!host) return;
-    inv.number = val("ie-number") || inv.number;
-    var d = val("ie-date"); if (d) inv.date = new Date(d).getTime();
-    var du = val("ie-due"); if (du) inv.dueDate = new Date(du).getTime();
-    inv.clientId = val("ie-client") || inv.clientId;
-    inv.taxRate = parseFloat(val("ie-tax")) || 0;
-    inv.notes = val("ie-notes");
-    var lines = [], fx = inv.billing === "fixed";
-    host.querySelectorAll("#ie-lines .ie-line").forEach(function (tr) {
-      var desc = tr.querySelector('[data-ield="desc"]').value.trim();
-      if (fx) {
-        var av = tr.querySelector('[data-ield="amount"]').value.trim();
-        if (desc || av !== "") lines.push({ desc: desc, amount: av === "" ? 0 : (parseFloat(av) || 0) });
-      } else {
-        var hours = parseFloat(tr.querySelector('[data-ield="hours"]').value) || 0, rate = parseFloat(tr.querySelector('[data-ield="rate"]').value) || 0;
-        if (desc || hours || rate) lines.push({ desc: desc, hours: hours, rate: rate });
-      }
-    });
-    inv.lines = lines;
-    save(); render(); openInvoice(inv.id); flash(t("tInvSaved"));
-  }
-  function markPaid() { var inv = db.invoices.find(function (x) { return x.id === openInvId; }); if (inv) { inv.status = "paid"; save(); render(); openInvoice(inv.id); flash(t("tMarkedPaid")); } }
-  function delInvoice() { confirmModal(t("cDelInvoice"), function () { db.invoices = db.invoices.filter(function (x) { return x.id !== openInvId; }); openInvId = null; save(); render(); }); }
   function download(name, text, type) { try { var blob = new Blob([text], { type: type || "application/json" }), url = URL.createObjectURL(blob), a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 100); } catch (e) { flash(t("tDownloadNa")); } }
   function exportJSON() { download("timetrack-backup.json", JSON.stringify(db, null, 2)); }
   function csvCell(v) { var s = String(v == null ? "" : v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; }
