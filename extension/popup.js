@@ -36,7 +36,8 @@ function openApp() { chrome.tabs.create({ url: APP_URL }); window.close(); }
 
 function runningCard(t, running, todaySec) {
   var paused = !!running.pausedAt;
-  var sec = todaySec + elapsed(running);
+  // Show the CURRENT session only (from zero), matching the app's live hero clock.
+  var sec = elapsed(running);
   return '<div class="tcard running' + (paused ? " paused" : "") + '">' +
     '<div class="rc-head">' +
       '<span class="rc-av" style="' + avStyle(t.name) + '">' + esc(initials(t.name)) + '</span>' +
@@ -114,10 +115,9 @@ function render(state) {
 
   if (running && !running.pausedAt) {
     tickTimer = setInterval(function () {
-      var base = totals[running.taskId] || 0;
       var clocks = main.querySelectorAll("[data-clock]");
       for (var i = 0; i < clocks.length; i++) {
-        if (clocks[i].getAttribute("data-clock") === running.taskId) clocks[i].textContent = fmtClock(base + elapsed(running));
+        if (clocks[i].getAttribute("data-clock") === running.taskId) clocks[i].textContent = fmtClock(elapsed(running));
       }
       var tot = document.getElementById("total"), ts = 0;
       Object.keys(totals).forEach(function (k) { ts += totals[k]; });
