@@ -247,6 +247,7 @@
   .proj-folder:hover .ffile:nth-child(1) { transform: rotate(-17deg) translate(-10px, 1px); }
   .proj-folder:hover .ffile:nth-child(3) { transform: rotate(17deg) translate(10px, 1px); }
   .ffile.ph { background: color-mix(in oklab, var(--ink) 12%, var(--bg)); box-shadow: 0 8px 18px oklch(0 0 0 / 0.28), inset 0 0 0 1px var(--hairline); }
+  .folder-files.empty .ffile.solo, .proj-folder:hover .folder-files.empty .ffile.solo { transform: translateY(4px) !important; opacity: .5; }
   .folder-front { position: relative; z-index: 2; margin-top: 4px; background: var(--glass); backdrop-filter: blur(28px) saturate(195%); -webkit-backdrop-filter: blur(28px) saturate(195%); border: 1px solid var(--glass-brd); border-radius: 3px 18px 18px 18px; box-shadow: var(--shadow-lg), inset 0 1px 0 oklch(1 0 0 / 0.32), inset 0 0 24px oklch(1 0 0 / 0.04); padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
   .folder-tab { position: absolute; top: -22px; left: -1px; width: 36%; min-width: 92px; max-width: 150px; height: 24px; background: var(--glass); border: 1px solid var(--glass-brd); border-bottom: none; border-radius: 11px 14px 0 0; backdrop-filter: blur(28px) saturate(195%); -webkit-backdrop-filter: blur(28px) saturate(195%); box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.28); }
   .proj-folder.active .folder-front { box-shadow: var(--shadow-lg); }
@@ -778,7 +779,7 @@
   ];
   var THEME_IDS = { auto: 1, dark: 1, light: 1, paper: 1, sky: 1, rose: 1, aurora: 1, onyx: 1, grape: 1, mint: 1, ocean: 1, sunset: 1, amber: 1 };
   function sysDark() { return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches); }
-  function effTheme() { return theme === "auto" ? (sysDark() ? "dark" : "light") : theme; }
+  function effTheme() { if (theme !== "auto") return theme; var hr = new Date().getHours(); return (hr >= 7 && hr < 19) ? "light" : "dark"; }
   function loadTheme() { try { var s = localStorage.getItem("timetrack_theme"); if (s && THEME_IDS[s]) return s; } catch (e) {} return "auto"; }
   function loadIntensity() { try { var r = localStorage.getItem(BGKEY); if (r) { var o = JSON.parse(r); if (o && o.intensity != null) return o.intensity; } } catch (e) {} return 0.5; }
   function loadPhotoOn() { try { var r = localStorage.getItem(BGKEY); if (r) { var o = JSON.parse(r); if (o && o.photoOff) return false; } } catch (e) {} return true; }
@@ -791,7 +792,8 @@
   function applyTheme() { var r = document.documentElement, eff = effTheme(); r.setAttribute("data-theme", eff); r.style.setProperty("--mesh-op", String(Math.max(0, Math.min(0.6, meshIntensity * 0.7))));
     var ph = photoOn ? (window.__TT_PHOTOS || {})[eff] : null, bp = document.getElementById("bg-photo");
     if (bp) { if (ph) { bp.style.backgroundImage = "url(" + ph + ")"; bp.style.setProperty("--photo-op", String(Math.max(0.06, Math.min(0.35, meshIntensity * 0.38)))); bp.classList.add("on"); r.setAttribute("data-photo", "on"); } else { bp.classList.remove("on"); r.removeAttribute("data-photo"); } } }
-  if (window.matchMedia) { try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { if (theme === "auto") { applyTheme(); render(); } }); } catch (e) {} }
+  // Auto theme is clock-based (day 07:00–19:00 = light, else dark). Flip at the boundary while the app stays open.
+  setInterval(function () { if (theme !== "auto") return; if (document.documentElement.getAttribute("data-theme") !== effTheme()) { applyTheme(); render(); } }, 60000);
   function themeCard() {
     function swatch(th) { return '<button class="bg-swatch' + (theme === th.id ? " active" : "") + '" data-themeset="' + th.id + '"><div class="bg-prev" style="background:' + th.sw + '"></div><span class="bg-name">' + esc(th.name) + '</span></button>'; }
     function grp(g) { return THEMES.filter(function (th) { return th.group === g; }).map(swatch).join(""); }
@@ -1000,7 +1002,7 @@
   function projStatus(p) { return p.status && STATUS_PILL[p.status] ? p.status : "active"; }
   function stLabel(st) { return t("st" + st.charAt(0).toUpperCase() + st.slice(1)); }
   function statusPill(p) { var st = projStatus(p); return '<button class="pill ' + STATUS_PILL[st] + '" data-projstatus="' + p.id + '" title="click to change">' + stLabel(st) + '</button>'; }
-  function fannedFiles(p) { var all = projTasks(p.id); if (!all.length) return '<span class="ffile ph"></span><span class="ffile ph"></span>'; function nf(x) { return '<span class="ffile" style="' + avatarStyle(x.name) + '"><span class="ffile-lbl">' + esc(x.name) + '</span></span>'; } var files; if (all.length > 3) { files = all.slice(0, 2).map(nf); files.push('<span class="ffile ffile-count"><span class="ffile-lbl">+' + (all.length - 2) + '</span></span>'); } else { files = all.map(nf); if (files.length === 1) files.unshift('<span class="ffile ph"></span>'); } return files.join(""); }
+  function fannedFiles(p) { var all = projTasks(p.id); if (!all.length) return '<span class="ffile ph solo"></span>'; function nf(x) { return '<span class="ffile" style="' + avatarStyle(x.name) + '"><span class="ffile-lbl">' + esc(x.name) + '</span></span>'; } var files; if (all.length > 3) { files = all.slice(0, 2).map(nf); files.push('<span class="ffile ffile-count"><span class="ffile-lbl">+' + (all.length - 2) + '</span></span>'); } else { files = all.map(nf); if (files.length === 1) files.unshift('<span class="ffile ph"></span>'); } return files.join(""); }
   var projSort = "recent", projFilter = "all";
   try { var _ps = localStorage.getItem("timetrack_projsort"); if (_ps) projSort = _ps; } catch (e) {}
   function vProjects() {
@@ -1014,7 +1016,7 @@
     function projCard(p) {
       var m = meta[p.id], isA = p.id === db.activeProjectId;
       return '<div class="proj-folder' + (isA ? " active" : "") + '" data-projopen="' + p.id + '">' +
-        '<div class="folder-files">' + fannedFiles(p) + '</div>' +
+        '<div class="folder-files' + (m.n ? '' : ' empty') + '">' + fannedFiles(p) + '</div>' +
         '<div class="folder-front"><span class="folder-tab"></span>' +
         '<div class="proj-top"><span class="proj-mark" style="' + avatarStyle(p.name) + '">' + esc(initials(p.name)) + '</span>' +
         '<div class="proj-meta"><div class="proj-name">' + esc(p.name) + '</div>' +
