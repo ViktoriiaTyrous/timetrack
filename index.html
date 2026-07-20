@@ -119,14 +119,14 @@
     --b1: oklch(0.60 0.14 60); --b2: oklch(0.55 0.15 20); --b3: oklch(0.55 0.12 330); --b4: oklch(0.58 0.14 40);
   }
   :root[data-theme="mint"] {
-    --bg: oklch(0.97 0.02 178); --ink: oklch(0.28 0.03 195); --ink-dim: oklch(0.48 0.03 195); --ink-faint: oklch(0.62 0.025 195);
-    --glass: oklch(1 0 0 / 0.55); --glass-2: oklch(1 0 0 / 0.78); --glass-3: oklch(1 0 0 / 0.90);
-    --glass-brd: oklch(1 0 0 / 0.70); --hairline: oklch(0.50 0.05 190 / 0.14); --sheen: oklch(1 0 0 / 0.55);
-    --dark-glass: oklch(0.28 0.05 195 / 0.90); --dark-glass-brd: oklch(1 0 0 / 0.10);
-    --accent: oklch(0.60 0.13 175); --good: oklch(0.58 0.13 165); --good-soft: oklch(0.92 0.06 165 / 0.7); --bad: oklch(0.58 0.20 22); --bad-soft: oklch(0.93 0.06 22 / 0.7);
-    --grad: linear-gradient(135deg, oklch(0.80 0.13 165), oklch(0.72 0.12 192), oklch(0.68 0.13 210)); --grad-soft: linear-gradient(135deg, oklch(0.80 0.13 165 / 0.16), oklch(0.68 0.13 210 / 0.16));
-    --shadow-lg: 0 2px 6px oklch(0.4 0.05 190 / 0.06), 0 18px 40px oklch(0.4 0.05 190 / 0.12); --shadow-sm: 0 1px 2px oklch(0.4 0.05 190 / 0.06), 0 6px 18px oklch(0.4 0.05 190 / 0.10);
-    --b1: oklch(0.85 0.10 165); --b2: oklch(0.83 0.09 192); --b3: oklch(0.88 0.08 208); --b4: oklch(0.85 0.10 176);
+    --bg: oklch(0.15 0.028 172); --ink: oklch(0.96 0.012 172); --ink-dim: oklch(0.75 0.03 172); --ink-faint: oklch(0.67 0.03 172);
+    --glass: oklch(0.28 0.03 172 / 0.50); --glass-2: oklch(0.32 0.03 172 / 0.68); --glass-3: oklch(0.37 0.035 172 / 0.85);
+    --glass-brd: oklch(1 0 0 / 0.10); --hairline: oklch(1 0 0 / 0.07); --sheen: oklch(1 0 0 / 0.08);
+    --dark-glass: oklch(0.18 0.025 172 / 0.80); --dark-glass-brd: oklch(1 0 0 / 0.12);
+    --accent: oklch(0.75 0.15 172); --good: oklch(0.80 0.13 158); --good-soft: oklch(0.34 0.07 160 / 0.5); --bad: oklch(0.72 0.16 22); --bad-soft: oklch(0.36 0.09 22 / 0.5);
+    --grad: linear-gradient(135deg, oklch(0.75 0.14 182), oklch(0.66 0.16 150)); --grad-soft: linear-gradient(135deg, oklch(0.75 0.14 182 / 0.16), oklch(0.66 0.16 150 / 0.16));
+    --shadow-lg: 0 2px 8px oklch(0 0 0 / 0.5), 0 20px 48px oklch(0 0 0 / 0.6); --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.4), 0 8px 22px oklch(0 0 0 / 0.5);
+    --b1: oklch(0.55 0.11 178); --b2: oklch(0.50 0.10 155); --b3: oklch(0.58 0.10 196); --b4: oklch(0.48 0.10 168);
   }
   :root[data-theme="amber"] {
     --bg: oklch(0.17 0.03 55); --ink: oklch(0.96 0.015 75); --ink-dim: oklch(0.76 0.03 70); --ink-faint: oklch(0.67 0.03 65);
@@ -301,6 +301,8 @@
   .field { display: flex; flex-direction: column; gap: 7px; }
   .field label { font-size: 12px; font-weight: 640; color: var(--ink-dim); }
   .inp { background: var(--glass-3); border: 1px solid var(--glass-brd); border-radius: 12px; padding: 10px 13px; color: var(--ink); width: 100%; }
+  .inp::placeholder { color: var(--ink-dim); opacity: 1; }
+  .inp:invalid::-webkit-datetime-edit { color: var(--ink-dim); }
   .inp:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   .inp.mono { font-family: var(--font-mono); }
   .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
@@ -352,7 +354,7 @@
   .modal-x:hover { color: var(--ink); }
   .settings-modal .modal-body > * { flex-shrink: 0; }
   .settings-tabs { display: flex; gap: 6px; padding: 12px 20px 0; }
-  .stab { padding: 8px 16px; border-radius: 11px; border: none; background: transparent; color: var(--ink-dim); font-weight: 640; font-size: 13px; transition: background .15s, color .15s; }
+  .stab { padding: 8px 16px; border-radius: 11px; border: none; background: transparent; color: color-mix(in oklab, var(--ink-dim), var(--ink) 40%); font-weight: 660; font-size: 13px; transition: background .15s, color .15s; }
   .stab:hover { color: var(--ink); }
   .stab.active { background: var(--glass-2); color: var(--ink); box-shadow: var(--shadow-sm); }
   .tsw { width: 44px; height: 25px; border-radius: 999px; border: 1px solid var(--glass-brd); background: var(--glass-2); position: relative; padding: 0; cursor: pointer; transition: background .16s; flex-shrink: 0; }
@@ -722,7 +724,7 @@
     { id: "aurora", name: "Aurora", sw: "linear-gradient(135deg,oklch(0.60 0.17 300),oklch(0.34 0.06 290),oklch(0.19 0.04 288))" },
     { id: "onyx", name: "Onyx", sw: "linear-gradient(135deg,oklch(0.52 0.012 285),oklch(0.22 0.006 285),oklch(0.13 0.005 285))" },
     { id: "grape", name: "Grape", sw: "linear-gradient(135deg,oklch(0.60 0.18 322),oklch(0.34 0.07 315),oklch(0.18 0.05 314))" },
-    { id: "mint", name: "Mint", sw: "linear-gradient(135deg,oklch(0.86 0.10 170),oklch(0.95 0.03 180),oklch(0.99 0.01 180))" },
+    { id: "mint", name: "Teal", sw: "linear-gradient(135deg,oklch(0.74 0.14 178),oklch(0.36 0.07 168),oklch(0.16 0.03 172))" },
     { id: "ocean", name: "Ocean", sw: "linear-gradient(135deg,oklch(0.62 0.15 250),oklch(0.33 0.05 245),oklch(0.17 0.035 245))" },
     { id: "sunset", name: "Sunset", sw: "linear-gradient(135deg,oklch(0.82 0.14 60),oklch(0.64 0.17 20),oklch(0.18 0.03 32))" },
     { id: "amber", name: "Amber", sw: "linear-gradient(135deg,oklch(0.84 0.14 78),oklch(0.62 0.15 50),oklch(0.18 0.04 45))" }
