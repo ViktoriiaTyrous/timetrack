@@ -1446,6 +1446,14 @@
     if (!db.settings) db.settings = { defaultCurrency: "USD" };
     render();
   });
+  // The timer extension drives the SAME timer while the app tab is open: it relays
+  // start/stop/pause commands here so there is a single running state, not two.
+  window.addEventListener("tt-ext-command", function (e) {
+    var d = (e && e.detail) || {};
+    if (d.action === "start" && d.taskId) { if (!(db.running && db.running.taskId === d.taskId)) toggleTimer(d.taskId); }
+    else if (d.action === "stop") { if (db.running) toggleTimer(db.running.taskId); }
+    else if (d.action === "pause" || d.action === "resume") { if (db.running) pauseResume(); }
+  });
 })();
 </script>
 

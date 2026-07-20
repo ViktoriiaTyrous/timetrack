@@ -1,7 +1,16 @@
 # Chrome Web Store — listing copy (paste into the dashboard)
 
+**LIVE:** https://chromewebstore.google.com/detail/timetrack-timer/gpanbpocjjekglkankcifamhjfoealjg
+Extension ID: `gpanbpocjjekglkankcifamhjfoealjg`
+Use this link on Etsy + inside the app. (Store search indexing of a brand-new
+item lags a few hours–days; the direct link works immediately.)
+
 Upload file: **`timetrack-timer-extension.zip`** (built from `extension/`).
 Developer console: https://chrome.google.com/webstore/devconsole (one-time $5 fee).
+
+> New-extension note for buyers: Chrome may show a "proceed with caution — not
+> trusted by Enhanced Safe Browsing" notice. This is normal for newly published
+> extensions and clears over time; click **Continue to install**.
 
 ---
 
