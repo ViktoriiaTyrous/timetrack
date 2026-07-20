@@ -381,7 +381,9 @@
   @keyframes mrise { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .modal-back, .modal { animation: none; } }
   .modal-head { position: relative; padding: 18px 22px; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; border-bottom: 1px solid var(--hairline); }
-  .modal-body { position: relative; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .modal-body { position: relative; padding: 20px 22px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .modal-body > .field { flex: 1 1 100%; min-width: 0; }
+  .modal-body > .field.half { flex: 1 1 calc(50% - 7px); }
   .modal-foot { position: relative; padding: 15px 22px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--hairline); }
   .settings-modal { width: min(600px, 100%); max-height: 88vh; display: flex; flex-direction: column; }
   .settings-modal .modal-body { overflow-y: auto; padding: 4px 22px 8px; display: flex; flex-direction: column; gap: 0; }
@@ -1117,8 +1119,9 @@
   function openModal(opts) {
     var back = document.createElement("div"); back.className = "modal-back no-print";
     var fh = opts.fields.map(function (f) {
-      if (f.type === "select") return '<div class="field"><label>' + esc(f.label) + '</label><span class="pill-select" style="width:100%"><select class="inp" data-mf="' + f.id + '" style="border-radius:12px">' + f.options.map(function (o) { var ov = (o && o.v != null) ? o.v : o, ol = (o && o.l != null) ? o.l : o; return '<option value="' + esc(ov) + '"' + (ov === f.value ? " selected" : "") + '>' + esc(ol) + (CUR[ov] ? " " + CUR[ov] : "") + '</option>'; }).join("") + '</select></span></div>';
-      return '<div class="field"><label>' + esc(f.label) + '</label><input class="inp' + (f.type === "number" ? " mono" : "") + '" data-mf="' + f.id + '" type="' + (f.type || "text") + '"' + (f.type === "number" ? ' step="' + (f.step || "1") + '" min="0"' : "") + ' value="' + esc(f.value == null ? "" : f.value) + '" placeholder="' + esc(f.placeholder || "") + '"></div>';
+      var fc = "field" + (f.half ? " half" : "");
+      if (f.type === "select") return '<div class="' + fc + '"><label>' + esc(f.label) + '</label><span class="pill-select" style="width:100%"><select class="inp" data-mf="' + f.id + '" style="border-radius:12px">' + f.options.map(function (o) { var ov = (o && o.v != null) ? o.v : o, ol = (o && o.l != null) ? o.l : o; return '<option value="' + esc(ov) + '"' + (ov === f.value ? " selected" : "") + '>' + esc(ol) + (CUR[ov] ? " " + CUR[ov] : "") + '</option>'; }).join("") + '</select></span></div>';
+      return '<div class="' + fc + '"><label>' + esc(f.label) + '</label><input class="inp' + (f.type === "number" ? " mono" : "") + '" data-mf="' + f.id + '" type="' + (f.type || "text") + '"' + (f.type === "number" ? ' step="' + (f.step || "1") + '" min="0"' : "") + ' value="' + esc(f.value == null ? "" : f.value) + '" placeholder="' + esc(f.placeholder || "") + '"></div>';
     }).join("");
     back.innerHTML = '<div class="modal"><div class="modal-head">' + esc(opts.title) + '</div><div class="modal-body">' + fh + '</div><div class="modal-foot"><button class="btn" data-mcancel>' + t("cancel") + '</button><button class="btn primary" data-mok>' + (opts.submitLabel || t("create")) + '</button></div></div>';
     document.body.appendChild(back);
@@ -1215,10 +1218,10 @@
     openModal({ title: ex ? t("editProject") : t("newProject"), submitLabel: ex ? t("save") : t("create"), fields: [
       { id: "name", label: t("clName"), placeholder: "Website Redesign", value: ex ? ex.name : "" },
       { id: "client", label: t("fClient"), type: "select", options: [{ v: "", l: "—" }].concat(db.clients.map(function (c) { return { v: c.id, l: c.name }; })), value: ex ? (ex.clientId || "") : "" },
-      { id: "billing", label: t("billing"), type: "select", options: [{ v: "hourly", l: t("billHourly") }, { v: "fixed", l: t("billFixed") }], value: ex ? (isFixed(ex) ? "fixed" : "hourly") : "hourly" },
-      { id: "rate", label: t("cRate"), type: "number", step: "1", value: ex ? String(ex.rate) : "50" },
-      { id: "currency", label: t("currency"), type: "select", options: Object.keys(CUR), value: ex ? ex.currency : defCur() },
-      { id: "status", label: t("fStatus"), type: "select", options: STATUS_ORDER.map(function (s) { return { v: s, l: stLabel(s) }; }), value: ex ? projStatus(ex) : "active" },
+      { id: "billing", label: t("billing"), type: "select", half: true, options: [{ v: "hourly", l: t("billHourly") }, { v: "fixed", l: t("billFixed") }], value: ex ? (isFixed(ex) ? "fixed" : "hourly") : "hourly" },
+      { id: "status", label: t("fStatus"), type: "select", half: true, options: STATUS_ORDER.map(function (s) { return { v: s, l: stLabel(s) }; }), value: ex ? projStatus(ex) : "active" },
+      { id: "rate", label: t("cRate"), type: "number", step: "1", half: true, value: ex ? String(ex.rate) : "50" },
+      { id: "currency", label: t("currency"), type: "select", half: true, options: Object.keys(CUR), value: ex ? ex.currency : defCur() },
       { id: "description", label: t("fDesc"), placeholder: "One-line brief", value: ex ? (ex.description || "") : "" },
       { id: "notes", label: t("fNotes"), placeholder: "Links, logins, brief…", value: ex ? (ex.notes || "") : "" }
     ], onSubmit: function (v) { if (!v.name) return false;
