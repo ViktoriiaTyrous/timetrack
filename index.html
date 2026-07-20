@@ -268,7 +268,7 @@
   .pill-select.lang select { padding: 9px 30px 9px 13px; font-weight: 680; }
   .pill-select::after { content: "▾"; position: absolute; right: 13px; color: var(--ink-dim); pointer-events: none; font-size: 10px; }
   .topbar-spacer { flex: 1; }
-  .icon-btn { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--glass-brd); background: var(--glass-2); color: var(--ink); box-shadow: var(--shadow-sm); }
+  .icon-btn { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; border: 1px solid var(--glass-brd); background: var(--glass-2); color: var(--ink); box-shadow: var(--shadow-sm); }
   .icon-btn svg { width: 18px; height: 18px; }
 
   .live-pill { display: none; align-items: center; gap: 9px; padding: 7px 7px 7px 13px; border-radius: 999px; background: var(--dark-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--dark-glass-brd); box-shadow: var(--shadow-sm); color: var(--dark-ink); }
@@ -292,6 +292,7 @@
   .btn.primary { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px color-mix(in oklab, var(--accent) 30%, transparent); }
   .btn.ghost { background: transparent; border-color: transparent; color: var(--ink-dim); box-shadow: none; }
   .btn.ghost:hover { background: var(--glass-2); color: var(--ink); }
+  .btn.ghost.active { background: var(--glass-2); color: var(--ink); box-shadow: inset 0 0 0 1px var(--glass-brd); }
   .btn.danger { color: var(--bad); }
   .btn.danger-solid { background: var(--bad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px color-mix(in oklab, var(--bad) 30%, transparent); }
   .modal.modal-sm { max-width: 384px; }
@@ -362,7 +363,7 @@
   .task-av { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px; flex-shrink: 0; box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.25); }
   .task-main { flex: 1; min-width: 0; } .task-name { font-weight: 640; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .task-meta { font-size: 12px; color: var(--ink-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .task-time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 640; }
-  .timer-btn { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; border: 1px solid var(--glass-brd); background: var(--glass-2); color: var(--ink); box-shadow: var(--shadow-sm); transition: transform .06s, filter .15s; }
+  .timer-btn { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; border: 1px solid var(--glass-brd); background: var(--glass-2); color: var(--ink); box-shadow: var(--shadow-sm); transition: transform .06s, filter .15s; }
   .timer-btn:hover { filter: brightness(1.04); } .timer-btn:active { transform: translateY(1px); }
   .timer-btn.run { background: var(--grad); color: #fff; border-color: transparent; } .timer-btn svg { width: 16px; height: 16px; }
   .timer-btn.sm { width: 32px; height: 32px; box-shadow: 0 1px 3px oklch(0 0 0 / 0.16), 0 2px 6px oklch(0 0 0 / 0.12); } .timer-btn.sm svg { width: 13px; height: 13px; }
@@ -837,7 +838,7 @@
       var run = db.running && db.running.taskId === x.id;
       var st = e === 0 ? '<span class="pill neutral">' + t("noEstimate") + '</span>' : tOver ? '<span class="pill bad">+' + (a - e).toFixed(1) + 'h</span>' : '<span class="pill good">' + Math.round(pct) + '%</span>';
       var amtCell = fx ? '<td class="num"><input class="inp mono damt-inp" data-amount="' + x.id + '" type="number" step="1" min="0" value="' + (taskAmt(x) == null ? '' : taskAmt(x)) + '" placeholder="—"></td>' : '<td class="num" data-damt="' + x.id + '">' + money(taskEarned(x, p), p.currency) + '</td>';
-      return '<tr' + (run ? ' class="row-running"' : '') + '><td><div style="display:flex;align-items:center;gap:10px"><button class="timer-btn sm ' + (run ? "run" : "") + '" data-toggle="' + x.id + '" aria-label="' + (run ? "Stop timer" : "Start timer") + '" title="' + (run ? "Stop timer" : "Start timer") + '">' + (run ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>') + '</button><span class="task-av" style="width:30px;height:30px;font-size:12px;' + avatarStyle(x.name) + '">' + esc(initials(x.name)) + '</span><span style="min-width:0">' + esc(x.name) + '</span><button class="btn ghost icon sm" data-taskedit="' + x.id + '" aria-label="' + t("editTask") + '" title="' + t("editTask") + '" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button></div></td><td class="num">' + e.toFixed(1) + '</td><td class="num" data-dact="' + x.id + '">' + a.toFixed(1) + '</td><td><div class="bar ' + (tOver ? "over" : "under") + '" data-dbar="' + x.id + '"><i style="width:' + pct + '%"></i></div></td><td data-dstat="' + x.id + '">' + st + '</td>' + amtCell + '</tr>';
+      return '<tr' + (run ? ' class="row-running"' : '') + '><td><div style="display:flex;align-items:center;gap:10px"><button class="timer-btn sm ' + (run ? "run" : "") + '" data-toggle="' + x.id + '" aria-label="' + (run ? "Stop timer" : "Start timer") + '" title="' + (run ? "Stop timer" : "Start timer") + '">' + (run ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>') + '</button><span class="task-av" style="width:30px;height:30px;font-size:12px;' + avatarStyle(x.name) + '">' + esc(initials(x.name)) + '</span><span style="min-width:0">' + esc(x.name) + '</span><button class="btn ghost icon sm" data-taskedit="' + x.id + '" aria-label="' + t("editTask") + '" title="' + t("editTask") + '" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button><button class="btn ghost icon sm danger" data-deltask="' + x.id + '" aria-label="' + t("del") + '" title="' + t("del") + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 6h18M8 6V4h8v2M6 6v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6M10 11v6M14 11v6"/></svg></button></div></td><td class="num">' + e.toFixed(1) + '</td><td class="num" data-dact="' + x.id + '">' + a.toFixed(1) + '</td><td><div class="bar ' + (tOver ? "over" : "under") + '" data-dbar="' + x.id + '"><i style="width:' + pct + '%"></i></div></td><td data-dstat="' + x.id + '">' + st + '</td>' + amtCell + '</tr>';
     }).join("");
     if (!ts.length) rows = '<tr><td colspan="6" class="muted" style="text-align:center;padding:26px">' + t("noTasksTitle") + '</td></tr>';
     return head(t("dashTitle"), t("dashDesc", { p: p.name })) + liveHero() +
@@ -1025,12 +1026,11 @@
     } else {
       var groups = {}; list.forEach(function (p) { var s = projStatus(p); (groups[s] = groups[s] || []).push(p); });
       var order = ["active", "pending", "done", "paid"].filter(function (s) { return groups[s] && groups[s].length; });
-      var secs = order.map(function (s, i) {
-        var last = i === order.length - 1;
+      var secs = order.map(function (s) {
         return '<div class="proj-sec"><div class="proj-sec-h"><span class="pill ' + STATUS_PILL[s] + '">' + stLabel(s) + '</span><span class="proj-sec-n">' + groups[s].length + '</span></div>' +
-          '<div class="proj-grid">' + groups[s].map(projCard).join("") + (last ? addCard : "") + '</div></div>';
+          '<div class="proj-grid">' + groups[s].map(projCard).join("") + '</div></div>';
       }).join("");
-      body = secs || '<div class="proj-grid">' + addCard + '</div>';
+      body = '<div class="proj-grid proj-add-top">' + addCard + '</div>' + (secs || "");
     }
     var sortSel = '<span class="pill-select"><select id="proj-sort" style="border-radius:999px">' + [["recent", "sortRecent"], ["name", "sortName"], ["worked", "sortWorked"], ["earned", "sortEarned"]].map(function (o) { return '<option value="' + o[0] + '"' + (projSort === o[0] ? " selected" : "") + '>' + t(o[1]) + '</option>'; }).join("") + '</select></span>';
     var filtSel = '<span class="pill-select"><select id="proj-filter" style="border-radius:999px"><option value="all"' + (projFilter === "all" ? " selected" : "") + '>' + t("allStatuses") + '</option>' + STATUS_ORDER.map(function (s) { return '<option value="' + s + '"' + (projFilter === s ? " selected" : "") + '>' + stLabel(s) + '</option>'; }).join("") + '</select></span>';
@@ -1075,7 +1075,7 @@
     save(); render();
   }
   function pauseResume() { if (!db.running) return; if (db.running.pausedAt) { db.running.startedAt += (Date.now() - db.running.pausedAt); db.running.pausedAt = null; } else { db.running.pausedAt = Date.now(); } save(); render(); }
-  function setNav(nav) { current = nav; document.querySelectorAll(".dock-btn").forEach(function (x) { x.classList.toggle("active", x.dataset.nav === nav); }); render(); }
+  function setNav(nav) { current = nav; document.querySelectorAll(".dock-btn").forEach(function (x) { x.classList.toggle("active", x.dataset.nav === nav); }); var ap = document.getElementById("all-projects"); if (ap) ap.classList.toggle("active", nav === "projects"); render(); }
 
   function applyI18n() {
     document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t(el.dataset.i18n); });
@@ -1208,7 +1208,13 @@
 
   // ---------- wiring ----------
   document.querySelectorAll(".dock-btn").forEach(function (b) { b.addEventListener("click", function () { setNav(b.dataset.nav); }); });
-  document.getElementById("dock-fab").addEventListener("click", function () { if (db.running) toggleTimer(db.running.taskId); else setNav("tracker"); });
+  document.getElementById("dock-fab").addEventListener("click", function () {
+    if (db.running) { toggleTimer(db.running.taskId); return; }
+    var best = null, bt = -1;
+    db.entries.forEach(function (en) { if (en.date > bt) { var tk = db.tasks.find(function (x) { return x.id === en.taskId; }); if (tk) { bt = en.date; best = tk; } } });
+    if (!best) best = db.tasks[0] || null;
+    if (best) toggleTimer(best.id); else setNav("tracker");
+  });
   document.getElementById("open-settings").addEventListener("click", openSettings);
   document.getElementById("proj-tabs").addEventListener("click", function (e) { var b = e.target.closest("[data-projtab]"); if (!b) return; db.activeProjectId = b.dataset.projtab; save(); render(); });
   document.getElementById("all-projects").addEventListener("click", function () { setNav("projects"); });
